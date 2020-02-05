@@ -9,11 +9,10 @@ import java.util.ArrayList;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 Armature simpleArmature;
-Bone  rootBone, initialBone, 
-secondBone, thirdBone, secondBoneC,
-secondBoneD, thirdBoneA, thirdBoneB,
-thirdBoneC, thirdBoneD, fourthBone,
-fourthBoneA, fourthBoneB, fourthBoneC,
+Bone  rootBone, initialBone, spineBone, headBone,
+spineBoneA, spineBoneB, spineBoneC,
+upLegBoneL, lowLegBoneL, upLegBoneR, lowLegBoneR,
+leftShoulder, rightShoulder, fourthBoneC,
 fourthBoneD;
 
 
@@ -32,7 +31,7 @@ public void setup() {
     initializeBones(); //create the bones
     setBoneConstraints(); //set some constratints on them
     updatePinList(); //add end effectors (and create a list of them the user can cycle through)
-    activeBone = thirdBone;
+    activeBone = rootBone;
     
 }
 
@@ -60,50 +59,82 @@ public void draw() {
 
 public void initializeBones() {
     rootBone = simpleArmature.getRootBone();
-    initialBone = new Bone(rootBone, "body", 200f);
-    secondBone = new Bone(initialBone, "neckBone", 30f);
-    thirdBone = new Bone(secondBone, "headBone", 90f);
+    initialBone = new Bone(rootBone, "spine1", 60);
+    
+    //spine
+    spineBoneA = new Bone(initialBone, "spine2", 60);
+    spineBoneB = new Bone(spineBoneA, "spine3", 60);
+    spineBoneC = new Bone(spineBoneB, "spine4", 60);
+    
+    //left leg
+    upLegBoneL = new Bone(spineBoneC, "upLegBoneL", 90f);
+    lowLegBoneL = new Bone(upLegBoneL, "lowLegBoneL", 120f);
+    
+    //right leg
+    upLegBoneR = new Bone(spineBoneC, "upLegBoneR", 90f);
+    lowLegBoneR = new Bone(upLegBoneR, "lowLegBoneR", 120f);
+    
+    //left arm
+    leftShoulder = new Bone(initialBone, "leftShoulder", 50f);
+    
+    
+    //head?
+    headBone = new Bone(rootBone, "head", 100);
     
 
-    secondBone.rotAboutFrameZ(-.4f);
-    thirdBone.rotAboutFrameZ(.4f);
-    initialBone.rotAboutFrameX(.01f);
+    //initialize body
+    initialBone.rotAboutFrameX(3f);
+
+    //initialize left leg
+    upLegBoneL.rotAboutFrameZ(-.4f);
+    lowLegBoneL.rotAboutFrameZ(.4f);
+    
+    //initialize right leg
+    upLegBoneR.rotAboutFrameZ(.4f);
+    lowLegBoneR.rotAboutFrameZ(-.4f);
 }
 
 public void setBoneConstraints() {    
 
-    Kusudama firstConstraint = new Kusudama(initialBone);
-    firstConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
-    firstConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
-    firstConstraint.setAxialLimits(0.1f,0.3f);
-    firstConstraint.enable();
-    initialBone.addConstraint(firstConstraint);
+    //Kusudama firstConstraint = new Kusudama(initialBone);
+    //firstConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //firstConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //firstConstraint.setAxialLimits(0.1f,0.3f);
+    //firstConstraint.enable();
+    //initialBone.addConstraint(firstConstraint);
 
-    Kusudama secondConstraint = new Kusudama(secondBone);
-    secondConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f),1f);
-    secondConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
-    secondConstraint.setAxialLimits(0.1f,0.3f);
-    secondConstraint.enable();
-    secondBone.addConstraint(secondConstraint);
+    //Kusudama secondConstraint = new Kusudama(secondBone);
+    //secondConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f),1f);
+    //secondConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //secondConstraint.setAxialLimits(0.1f,0.3f);
+    //secondConstraint.enable();
+    //secondBone.addConstraint(secondConstraint);
 
-    Kusudama thirdConstraint = new Kusudama(thirdBone);
-    thirdConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
-    thirdConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
-    thirdConstraint.setAxialLimits(0.1f,0.3f);
-    thirdConstraint.enable();
-    thirdBone.addConstraint(thirdConstraint);
+    //Kusudama thirdConstraint = new Kusudama(thirdBone);
+    //thirdConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //thirdConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //thirdConstraint.setAxialLimits(0.1f,0.3f);
+    //thirdConstraint.enable();
+    //thirdBone.addConstraint(thirdConstraint);
+    
+    //Kusudama secondConstraintC = new Kusudama(secondBoneC);
+    //secondConstraintC.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //secondConstraintC.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //secondConstraintC.setAxialLimits(0.1f,0.3f);
+    //secondConstraintC.enable();
+    //secondBoneC.addConstraint(secondConstraintC);
     
     rootBone.enablePin();  
-    secondBone.enablePin();
-    secondBone.setPin(new PVector(100, 0, 0));
-    thirdBone.enablePin();
-    thirdBone.setPin(new PVector(-200, 50, 0));
+    upLegBoneL.enablePin();
+    //thirdBone.enablePin();
+    //secondBoneC.enablePin();
+    ////thirdBone.setPin(new PVector(-200, 50, 0));
 }
 
 
 PVector  mouse = new PVector(0,0,0);
 public void drawBones() {
-  simpleArmature.drawMe(this, 100, 30f);
+  simpleArmature.drawMe(this, 80, 50f);
 }
 
 
