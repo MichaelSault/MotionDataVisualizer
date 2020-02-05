@@ -12,8 +12,9 @@ Armature simpleArmature;
 Bone  rootBone, initialBone, spineBone, headBone,
 spineBoneA, spineBoneB, spineBoneC,
 upLegBoneL, lowLegBoneL, upLegBoneR, lowLegBoneR,
-leftShoulder, rightShoulder, fourthBoneC,
-fourthBoneD;
+leftShoulder, rightShoulder, leftUpArm, rightUpArm,
+leftLowArm, rightLowArm, leftHand, rightHand,
+leftFoot, rightFoot, top;
 
 
 ArrayList<IKPin> pinnedBones = new ArrayList<IKPin>();
@@ -21,8 +22,8 @@ Bone activeBone;
 IKPin activePin; 
 
 public void setup() {
-    size(1200, 900, P3D);
-    simpleArmature = new Armature("example");
+    fullScreen(P3D);
+    simpleArmature = new Armature("humanoid");
     
     //rotate and translate the armature into the view window.
         simpleArmature.localAxes().translateTo(new SGVec_3f(0, 200, 0));  
@@ -31,7 +32,7 @@ public void setup() {
     initializeBones(); //create the bones
     setBoneConstraints(); //set some constratints on them
     updatePinList(); //add end effectors (and create a list of them the user can cycle through)
-    activeBone = rootBone;
+    activeBone = top;
     
 }
 
@@ -69,18 +70,32 @@ public void initializeBones() {
     //left leg
     upLegBoneL = new Bone(spineBoneC, "upLegBoneL", 90f);
     lowLegBoneL = new Bone(upLegBoneL, "lowLegBoneL", 120f);
+    leftFoot = new Bone(lowLegBoneL, "leftFoot", 0f); //not a bone, used to select the end point of the model
     
     //right leg
     upLegBoneR = new Bone(spineBoneC, "upLegBoneR", 90f);
     lowLegBoneR = new Bone(upLegBoneR, "lowLegBoneR", 120f);
+    rightFoot = new Bone(lowLegBoneR, "rightFoot", 0f); //not a bone, used to select the end point of the model
     
     //left arm
-    leftShoulder = new Bone(initialBone, "leftShoulder", 50f);
+    leftShoulder = new Bone(initialBone, "leftShoulder", 40f);
+    leftUpArm = new Bone(leftShoulder, "leftUpArm", 90f);
+    leftLowArm = new Bone(leftUpArm, "leftLowArm", 70f);
+    leftHand = new Bone(leftLowArm, "leftHand", 0f); //not a bone, used to select the end point of the model
     
+    
+    //right arm
+    rightShoulder = new Bone(initialBone, "rightShoulder", 40f);
+    rightUpArm = new Bone(rightShoulder, "rightUpArm", 90f);
+    rightLowArm = new Bone(rightUpArm, "rightLowArm", 70f);
+    rightHand = new Bone(rightLowArm, "rightHand", 0f); //not a bone, used to select the end point of the model
     
     //head?
     headBone = new Bone(rootBone, "head", 100);
+    top = new Bone(headBone, "top", 0f); //not a bone, used to select the end point of the model
     
+
+
 
     //initialize body
     initialBone.rotAboutFrameX(3f);
@@ -92,9 +107,19 @@ public void initializeBones() {
     //initialize right leg
     upLegBoneR.rotAboutFrameZ(.4f);
     lowLegBoneR.rotAboutFrameZ(-.4f);
+    
+    //initalize left arm
+    leftShoulder.rotAboutFrameZ(-1f);
+    leftUpArm.rotAboutFrameZ(1f);
+    leftLowArm.rotAboutFrameZ(-.5f);
+    
+    //initalize right arm
+    rightShoulder.rotAboutFrameZ(1f);
+    rightUpArm.rotAboutFrameZ(-1f);
+    rightLowArm.rotAboutFrameZ(.5f);
 }
 
-public void setBoneConstraints() {    
+public void setBoneConstraints() {    //next step is to set constraints for the bones
 
     //Kusudama firstConstraint = new Kusudama(initialBone);
     //firstConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
@@ -124,10 +149,11 @@ public void setBoneConstraints() {
     //secondConstraintC.enable();
     //secondBoneC.addConstraint(secondConstraintC);
     
-    rootBone.enablePin();  
-    upLegBoneL.enablePin();
-    //thirdBone.enablePin();
-    //secondBoneC.enablePin();
+    top.enablePin();
+    leftHand.enablePin();
+    rightHand.enablePin();
+    leftFoot.enablePin();
+    rightFoot.enablePin();
     ////thirdBone.setPin(new PVector(-200, 50, 0));
 }
 
@@ -141,9 +167,10 @@ public void drawBones() {
 public void setSceneAndCamera() {
   background(160, 100, 100);
   directionalLight(248, 248, 248, 0, 10, -10);
-  mouse.x =  mouseX - (width/2); mouse.y = mouseY - (height/2);
+  mouse.x =  mouseX - (width/2); mouse.y = mouseY - (height/2)+300f;
   camera(cameraPosition, lookAt, up);
-  ortho(-width/2, width/2, -height/2, height/2, -10000, 10000);     
+  //ortho(-width/2, width/2, -height/2, height/2, -10000, 10000);
+  ortho(-width/2, width/2, (-height/2)-300f, (height/2)-300f, -10000, 10000);
 }
 
 public void drawInstructions() {
@@ -153,10 +180,11 @@ public void drawInstructions() {
        +"-To select a different pin, use the Up and Down arrows.\n"
       + "-Use the mouse wheel to rotate the pin about its (red) Y axis.\n" 
       + "-Hold shift while using the mouse wheel to rotate the pin about its (blue) Z axis. \n"
-      + "-Hold ctrl while using the mouse wheel to rotate the pin about its (green) X axis";
+      + "-Hold ctrl while using the mouse wheel to rotate the pin about its (green) X axis. \n"
+      + "-Current Order: Head, Left Leg, Right Leg, Left Arm, Right Arm,";
   
-  text(instructionText, (-width/2f) + 20f, (-height/2f) + 20f); 
-  textSize(14f);
+  text(instructionText, (-width/2f) + 20f, (-height/2f) + 320f); 
+  textSize(20f);
   
 }
 
