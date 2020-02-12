@@ -45,7 +45,7 @@ public void draw() {
                 rootBone, //the bone the solver should start from 
                 0.05f, // dampening parameter (in radians), determines the maximum amount a bone can rotate per iteration step. 
                 // keeping this value low will result in higher quality poses, but those poses will take more iterations to converge. 
-                10, //inverse weighting helps prevent bones near the target from doing all of the work 
+                200, //inverse weighting helps prevent bones near the target from doing all of the work 
                 //so  you don't need to rely on small dampening factors mixed with high iteration counts 
                 //to get natural looking poses, but it makes armatures with multiple end effectors more unstable. 
                 // since this armature has multiple end effectors, we leave this off.
@@ -121,40 +121,153 @@ public void initializeBones() {
 
 public void setBoneConstraints() {    //next step is to set constraints for the bones
 
-    //Kusudama firstConstraint = new Kusudama(initialBone);
-    //firstConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
-    //firstConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
-    //firstConstraint.setAxialLimits(0.1f,0.3f);
-    //firstConstraint.enable();
-    //initialBone.addConstraint(firstConstraint);
+    //Kusudama initialConstraint = new Kusudama(initialBone);
+    //initialConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //initialConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //initialConstraint.setAxialLimits(0.1f,0.3f);
+    //initialConstraint.enable();
+    //initialBone.addConstraint(initialConstraint);
 
-    //Kusudama secondConstraint = new Kusudama(secondBone);
-    //secondConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f),1f);
-    //secondConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
-    //secondConstraint.setAxialLimits(0.1f,0.3f);
-    //secondConstraint.enable();
-    //secondBone.addConstraint(secondConstraint);
-
-    //Kusudama thirdConstraint = new Kusudama(thirdBone);
-    //thirdConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
-    //thirdConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
-    //thirdConstraint.setAxialLimits(0.1f,0.3f);
-    //thirdConstraint.enable();
-    //thirdBone.addConstraint(thirdConstraint);
+    Kusudama spineConstraintA = new Kusudama(spineBoneA);
+    spineConstraintA.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    spineConstraintA.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    spineConstraintA.setAxialLimits(0.1f,0.3f);
+    spineConstraintA.enable();
+    spineBoneA.addConstraint(spineConstraintA);
     
-    //Kusudama secondConstraintC = new Kusudama(secondBoneC);
-    //secondConstraintC.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
-    //secondConstraintC.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
-    //secondConstraintC.setAxialLimits(0.1f,0.3f);
-    //secondConstraintC.enable();
-    //secondBoneC.addConstraint(secondConstraintC);
+    Kusudama spineConstraintB = new Kusudama(spineBoneB);
+    spineConstraintB.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    spineConstraintB.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    spineConstraintB.setAxialLimits(0.1f,0.3f);
+    spineConstraintB.enable();
+    spineBoneB.addConstraint(spineConstraintB);
     
+    Kusudama spineConstraintC = new Kusudama(spineBoneC);
+    spineConstraintC.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    spineConstraintC.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    spineConstraintC.setAxialLimits(0.1f,0.3f);
+    spineConstraintC.enable();
+    spineBoneC.addConstraint(spineConstraintC);
+    
+    //Kusudama upLegConstraintL = new Kusudama(upLegBoneL);
+    //upLegConstraintL.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //upLegConstraintL.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //upLegConstraintL.setAxialLimits(0.1f,0.3f);
+    //upLegConstraintL.enable();
+    //upLegBoneL.addConstraint(upLegConstraintL);
+    
+    //Kusudama upLegConstraintR = new Kusudama(upLegBoneR);
+    //upLegConstraintR.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //upLegConstraintR.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //upLegConstraintR.setAxialLimits(0.1f,0.3f);
+    //upLegConstraintR.enable();
+    //upLegBoneR.addConstraint(upLegConstraintR);
+    
+    //Kusudama lowLegConstraintL = new Kusudama(lowLegBoneL);
+    //lowLegConstraintL.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //lowLegConstraintL.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //lowLegConstraintL.setAxialLimits(0.1f,0.3f);
+    //lowLegConstraintL.enable();
+    //lowLegBoneL.addConstraint(lowLegConstraintL);
+    
+    //Kusudama lowLegConstraintR = new Kusudama(lowLegBoneR);
+    //lowLegConstraintR.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //lowLegConstraintR.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //lowLegConstraintR.setAxialLimits(0.1f,0.3f);
+    //lowLegConstraintR.enable();
+    //lowLegBoneR.addConstraint(lowLegConstraintR);
+    
+    //Kusudama lfootConstraint = new Kusudama(leftFoot);
+    //lfootConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //lfootConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //lfootConstraint.setAxialLimits(0.1f,0.3f);
+    //lfootConstraint.enable();
+    //leftFoot.addConstraint(lfootConstraint);
+    
+    //Kusudama rfootConstraint = new Kusudama(rightFoot);
+    //rfootConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //rfootConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //rfootConstraint.setAxialLimits(0.1f,0.3f);
+    //rfootConstraint.enable();
+    //rightFoot.addConstraint(rfootConstraint);
+    
+    Kusudama lshoulderConstraint = new Kusudama(leftShoulder);
+    lshoulderConstraint.addLimitConeAtIndex(0, new PVector(.5f, .8f, .8f), 1f);
+    lshoulderConstraint.addLimitConeAtIndex(1, new PVector(.8f, 1f, 1f), 1f);
+    lshoulderConstraint.setAxialLimits(0.1f,0.2f);
+    lshoulderConstraint.enable();
+    leftShoulder.addConstraint(lshoulderConstraint);
+    
+    Kusudama rshoulderConstraint = new Kusudama(rightShoulder);
+    rshoulderConstraint.addLimitConeAtIndex(0, new PVector(.5f, .8f, .8f), 1f);
+    rshoulderConstraint.addLimitConeAtIndex(1, new PVector(.8f, 1f, 1f), 1f);
+    rshoulderConstraint.setAxialLimits(0.1f,0.3f);
+    rshoulderConstraint.enable();
+    rightShoulder.addConstraint(rshoulderConstraint);
+    
+    //Kusudama luArmConstraint = new Kusudama(leftUpArm);
+    //luArmConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //luArmConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //luArmConstraint.setAxialLimits(0.1f,0.3f);
+    //luArmConstraint.enable();
+    //leftUpArm.addConstraint(luArmConstraint);
+    
+    //Kusudama ruArmConstraint = new Kusudama(rightUpArm);
+    //ruArmConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //ruArmConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //ruArmConstraint.setAxialLimits(0.1f,0.3f);
+    //ruArmConstraint.enable();
+    //rightUpArm.addConstraint(ruArmConstraint);
+    
+    //Kusudama lhandConstraint = new Kusudama(leftHand);
+    //lhandConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //lhandConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //lhandConstraint.setAxialLimits(0.1f,0.3f);
+    //lhandConstraint.enable();
+    //leftHand.addConstraint(lhandConstraint);
+    
+    //Kusudama rhandConstraint = new Kusudama(rightHand);
+    //rhandConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //rhandConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //rhandConstraint.setAxialLimits(0.1f,0.3f);
+    //rhandConstraint.enable();
+    //rightHand.addConstraint(rhandConstraint);
+    
+    //Kusudama headConstraint = new Kusudama(headBone);
+    //headConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //headConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //headConstraint.setAxialLimits(0.1f,0.3f);
+    //headConstraint.enable();
+    //headBone.addConstraint(headConstraint);
+    
+    //Kusudama topConstraint = new Kusudama(top);
+    //topConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //topConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //topConstraint.setAxialLimits(0.1f,0.3f);
+    //topConstraint.enable();
+    //top.addConstraint(topConstraint);
+    
+    //Kusudama llArmConstraint = new Kusudama(leftLowArm);
+    //llArmConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //llArmConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //llArmConstraint.setAxialLimits(0.1f,0.3f);
+    //llArmConstraint.enable();
+    //leftLowArm.addConstraint(llArmConstraint);
+    
+    //Kusudama lrArmConstraint = new Kusudama(rightLowArm);
+    //lrArmConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    //lrArmConstraint.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    //lrArmConstraint.setAxialLimits(0.1f,0.3f);
+    //lrArmConstraint.enable();
+    //rightLowArm.addConstraint(lrArmConstraint);
+    
+    
+    //enable pins
     top.enablePin();
     leftHand.enablePin();
     rightHand.enablePin();
     leftFoot.enablePin();
     rightFoot.enablePin();
-    ////thirdBone.setPin(new PVector(-200, 50, 0));
 }
 
 
