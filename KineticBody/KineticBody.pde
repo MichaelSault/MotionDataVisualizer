@@ -70,7 +70,7 @@ public void initializeBones() {
     //left leg
     upLegBoneL = new Bone(spineBoneC, "upLegBoneL", 90f);
     lowLegBoneL = new Bone(upLegBoneL, "lowLegBoneL", 120f);
-    leftFoot = new Bone(lowLegBoneL, "leftFoot", 0f); //not a bone, used to select the end point of the model
+    leftFoot = new Bone(lowLegBoneL, "leftFoot", 0f); //not a bone, used to select the en d point of the model
     
     //right leg
     upLegBoneR = new Bone(spineBoneC, "upLegBoneR", 90f);
@@ -163,19 +163,19 @@ public void setBoneConstraints() {    //next step is to set constraints for the 
     //upLegConstraintR.enable();
     //upLegBoneR.addConstraint(upLegConstraintR);
     
-    //Kusudama lowLegConstraintL = new Kusudama(lowLegBoneL);
-    //lowLegConstraintL.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
-    //lowLegConstraintL.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
-    //lowLegConstraintL.setAxialLimits(0.1f,0.3f);
-    //lowLegConstraintL.enable();
-    //lowLegBoneL.addConstraint(lowLegConstraintL);
+    Kusudama lowLegConstraintL = new Kusudama(lowLegBoneL);
+    lowLegConstraintL.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    lowLegConstraintL.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    lowLegConstraintL.setAxialLimits(0.1f,0.3f);
+    lowLegConstraintL.enable();
+    lowLegBoneL.addConstraint(lowLegConstraintL);
     
-    //Kusudama lowLegConstraintR = new Kusudama(lowLegBoneR);
-    //lowLegConstraintR.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
-    //lowLegConstraintR.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
-    //lowLegConstraintR.setAxialLimits(0.1f,0.3f);
-    //lowLegConstraintR.enable();
-    //lowLegBoneR.addConstraint(lowLegConstraintR);
+    Kusudama lowLegConstraintR = new Kusudama(lowLegBoneR);
+    lowLegConstraintR.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
+    lowLegConstraintR.addLimitConeAtIndex(1, new PVector(-.5f, 1f, 0f), 1f);
+    lowLegConstraintR.setAxialLimits(0.1f,0.3f);
+    lowLegConstraintR.enable();
+    lowLegBoneR.addConstraint(lowLegConstraintR);
     
     //Kusudama lfootConstraint = new Kusudama(leftFoot);
     //lfootConstraint.addLimitConeAtIndex(0, new PVector(.5f, 1f, 0f), 1f);
@@ -194,7 +194,7 @@ public void setBoneConstraints() {    //next step is to set constraints for the 
     Kusudama lshoulderConstraint = new Kusudama(leftShoulder);
     lshoulderConstraint.addLimitConeAtIndex(0, new PVector(.5f, .8f, .8f), 1f);
     lshoulderConstraint.addLimitConeAtIndex(1, new PVector(.8f, 1f, 1f), 1f);
-    lshoulderConstraint.setAxialLimits(0.1f,0.2f);
+    lshoulderConstraint.setAxialLimits(0.1f,0.3f);
     lshoulderConstraint.enable();
     leftShoulder.addConstraint(lshoulderConstraint);
     
@@ -294,7 +294,8 @@ public void drawInstructions() {
       + "-Use the mouse wheel to rotate the pin about its (red) Y axis.\n" 
       + "-Hold shift while using the mouse wheel to rotate the pin about its (blue) Z axis. \n"
       + "-Hold ctrl while using the mouse wheel to rotate the pin about its (green) X axis. \n"
-      + "-Current Order: Head, Left Leg, Right Leg, Left Arm, Right Arm,";
+      + "*Constraint Example: Right Leg has constraints, Left Leg does not* \n"
+      + "*Spine and Shoulders also have constraints*";
   
   text(instructionText, (-width/2f) + 20f, (-height/2f) + 320f); 
   textSize(20f);
