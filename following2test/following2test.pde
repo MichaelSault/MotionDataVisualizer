@@ -38,19 +38,21 @@ void draw() {
   drawMainSceneIn3D(); 
  
   // read key throughout 
-  keyPressedIsCheckedContinuusly();
+  //keyPressedIsCheckedContinuusly();
  
   // HUD https : // en.wikipedia.org/wiki/Head-up_display ------------- 
   camera();
   noLights();
   hint(DISABLE_DEPTH_TEST);  
   fill(255);
-  text("press up to move in X and Y)",
-    18, 18);
+  textSize(26);
+  text("Press 1 to move in XYZ (Z based on scroll wheel)", 30, 30);
     
-  text("\npress down to move in X and Z)",
-    18, 18);
+  //text("\nPress 2 to move in XY Only", 30, 30);
     
+  //text("\n\nPress 4 to move in XZ Only", 30, 30);
+  xin = mouseX;
+  yin = mouseY;
     
     
   dragSegment(0, xin, yin, zin);
@@ -81,22 +83,26 @@ void drawMainSceneIn3D() {
 // --------------------------------------------------------------------------
 // Inputs 
  
-void keyPressedIsCheckedContinuusly() {
+//void keyPressedIsCheckedContinuusly() {
  
-  float Radius = 13;
+//  float Radius = 13;
  
-  if (key == CODED) {
-    if (keyCode == UP){
-      xin = mouseX;
-      yin = mouseY;
-      movement = 0;
-    }else if (keyCode == DOWN){
-      zin = mouseY;
-      xin = mouseX;
-      movement = 1;
-    }
-  }// if(keyPressed)
-}
+//  if (keyPressed) {
+//    if (key == '1'){
+//      xin = mouseX;
+//      yin = mouseY;
+//      movement = 0;
+    //}else if (key == '2'){
+    //  xin = mouseX;
+    //  yin = mouseY;
+    //  movement = 1;
+    //}else if (key == '3'){
+    //  zin = mouseY;
+    //  xin = mouseX;
+    //  movement = 2;
+    //}
+//    }// if(keyPressed)
+//}
  
 // --------------------------------------------------------------------------------
  
@@ -140,17 +146,25 @@ void dragSegment(int i, float xin, float yin, float zin) {
   float dy = yin - y[i];
   float dz = zin - z[i];
   
-  if (movement == 0){
-    float angle = atan2(dy, dx);
-    x[i] = xin - cos(angle) * segLength;
-    y[i] = yin - sin(angle) * segLength;
-    z[i] = zin - sin(angle) * segLength;
-  } else if (movement == 1){
-    float angle = atan2(dz, dx);
-    x[i] = xin - sin(angle) * segLength;
-    y[i] = yin - cos(angle) * segLength;
-    z[i] = zin - sin(angle) * segLength;
-  }
+  //if (movement == 0){
+      float angle1 = atan2(dy, dx);
+      float angle2 = atan2(dz, dy);
+      x[i] = xin - cos(angle1) * segLength;
+      y[i] = yin - (sin(angle1) * segLength);
+      z[i] = zin - sin(angle2) * segLength;
+  //} else if (movement == 1){
+  //   float angle1 = atan2(dy, dx);
+  //   float angle2 = atan2(dz, dy);
+  //    x[i] = xin - cos(angle1) * segLength;
+  //    y[i] = yin - sin(angle2) * segLength;
+  //    z[i] = zin - sin(angle2) * segLength;
+  //}
+  //} else if (movement == 2){
+  //    float angle2 = atan2(dz, dx);
+  //    x[i] = xin - cos(angle2) * segLength;
+  //    //y[i] = yin - sin(angle2) * segLength;
+  //    z[i] = zin - sin(angle2) * segLength;
+  //}
  
   segment(x[i], y[i], z[i], angle);
   
@@ -162,4 +176,10 @@ void segment(float x, float y, float z, float a) {
   rotate(a);
   sphere(20);
   popMatrix();
+}
+
+void mouseWheel(MouseEvent event) {
+  float e = event.getCount();
+  zin += e*5;
+  println(mouseY);
 }
