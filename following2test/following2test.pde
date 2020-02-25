@@ -46,7 +46,7 @@ void draw() {
   hint(DISABLE_DEPTH_TEST);  
   fill(255);
   textSize(26);
-  text("Press 1 to move in XYZ (Z based on scroll wheel)", 30, 30);
+  text("Use Mouse To Move XY, Use Scroll Wheel for Z", 30, 30);
     
   //text("\nPress 2 to move in XY Only", 30, 30);
     
@@ -54,8 +54,11 @@ void draw() {
   xin = mouseX;
   yin = mouseY;
     
-    
+  strokeWeight(0.5);
+  stroke(255, 0, 0);
+  noFill();
   dragSegment(0, xin, yin, zin);
+  stroke(255);
   dragSegment(1, x[0], y[0], z[0]);
   dragSegment(2, x[1], y[1], z[1]);
   dragSegment(3, x[2], y[2], z[2]);
