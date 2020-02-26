@@ -1,13 +1,17 @@
 float x = 100;
 float y = 100;
 float z = 0;
+float zin = 0;
 float angle1 = 0.0;
+float angle2 = 0.0;
 float segLength = 100;
 float ax = 0.0;
 float ay = 0.0;
 float az = 0.0;
 int value = 0;
 
+// "Floor" has y-value (the plane you fly in (y-direction)) 
+final float floorLevel = 500.0;
 
 void setup() {
   size(800, 500, P3D);
@@ -23,10 +27,13 @@ void draw() {
   
   float dx = mouseX - x;
   float dy = mouseY - y;
-  angle1 = atan2(dy, dx);  
+  float dz = zin - z;
+  angle1 = atan2(dy, dx);
+  angle2 = atan2(dz, 0);
+  
   x = mouseX - (cos(angle1) * segLength);
   y = mouseY - (sin(angle1) * segLength);
-  //z = mouseX - (sin(angle1) * segLength);
+  z = zin - (sin(angle2) * segLength);
  
   segment(x, y, z, angle1); 
   knob(x, y, z, angle1);
@@ -36,8 +43,11 @@ void segment(float x, float y, float z, float a) {
   pushMatrix();
   translate(x, y, z);
   rotateY(ay);
+  rotateZ(az);
   rotateX(ax);
-  rotateZ(a + az);
+  rotate(a);
+  strokeWeight(10);
+  stroke(255);
   line(0, 0, 0, segLength, 0, 0);
   popMatrix();
 }
@@ -54,10 +64,45 @@ void drawMainSceneIn3D() {
   lights();
   //noFill();
   stroke(255);
-  //gridOnFloor();
+  gridOnFloor();
   
   popMatrix();
 }//func
+
+
+void gridOnFloor() {
+ 
+  // pushMatrix();
+ 
+  noFill();
+ 
+  // add
+  int d = int ( 24000 / 200);
+ 
+  // diameter
+  int d1 = d;
+ 
+  float floorLevel1 = 2* floorLevel; 
+ 
+  // color
+  stroke(111);  // gridColor);
+  // rectMode(CENTER);
+  strokeWeight(1);
+ 
+  for (int x = -12000; x <= 12000; x += d) {
+    for (int y = -12000; y <= 12000; y += d) {
+      //rect(x, y, d1, d1);
+      line(x, floorLevel1, y, 
+        x+d1, floorLevel1, y); 
+      line(x, floorLevel1, y, 
+        x, floorLevel1, y+d1); 
+      line(x, floorLevel1, y+d1, 
+        x+d1, floorLevel1, y+d1);
+    }
+  }
+ 
+
+}
 
 //----------------------------------------------------------------
 
@@ -65,6 +110,9 @@ void knob(float x, float y, float z, float a) {
   pushMatrix();
   translate(x, y, z);
   rotate(a);
+  noFill();
+  stroke(255, 0, 0);
+  strokeWeight(.1);
   sphere(20);
   popMatrix();
 }
@@ -101,11 +149,11 @@ void keyPressedIsCheckedContinuusly() {
       text("Button Pressed: S", 30, 30);
       text("\nRotating On: X-Axis", 30, 30);
     }else if (key == 'z' || key == 'Z'){
-      z += 1;
+      zin += 2;
       text("Button Pressed: Z", 30, 30);
       text("\nMoving On: Z-Axis", 30, 30);
     }else if (key == 'x' || key == 'X'){
-      z -= 1;
+      zin -= 2;
       text("Button Pressed: X", 30, 30);
       text("\nMoving On: Z-Axis", 30, 30);
     } else {

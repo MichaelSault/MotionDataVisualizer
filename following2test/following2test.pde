@@ -151,7 +151,7 @@ void dragSegment(int i, float xin, float yin, float zin) {
   
   //if (movement == 0){
       float angle1 = atan2(dy, dx);
-      float angle2 = atan2(dz, dy);
+      float angle2 = atan2(dz, 0);
       x[i] = xin - cos(angle1) * segLength;
       y[i] = yin - (sin(angle1) * segLength);
       z[i] = zin - sin(angle2) * segLength;
