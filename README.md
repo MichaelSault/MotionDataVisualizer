@@ -1,7 +1,7 @@
 # Processing3DTests
 A number of test projects for the purpose of learning 3D modeling in Processing
 
----
+----
 ### March 12, 2020
 #### To Do:
 - [ ] Finish recreating MovingOnCurve and Reflection examples in 3D
@@ -37,8 +37,9 @@ A number of test projects for the purpose of learning 3D modeling in Processing
     - [x] Circle Collision
     - [ ] Reflection
 
---
 
+
+---
 ### February 27, 2020
 #### To Do:
 - [ ] Finish recreating MovingOnCurve and Reflection examples in 3D
@@ -75,6 +76,8 @@ A number of test projects for the purpose of learning 3D modeling in Processing
     - [ ] Reflection
 
 
+
+---
 ### February 13, 2020
 #### Look Into:
 - [ ] Check physical simulation (gravity, etc) + collision
@@ -103,10 +106,9 @@ A number of test projects for the purpose of learning 3D modeling in Processing
 - [x] Research Hierarchical Modeling concepts
   - https://web.cs.wpi.edu/~emmanuel/courses/cs543/f13/slides/lecture05_p3.pdf
   
-
-
-
-
+  
+  
+---
 ### January 30, 2020
 #### Look Into:
 - [ ] Importing models (.OBJ)
