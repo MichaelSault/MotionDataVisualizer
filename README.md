@@ -111,8 +111,8 @@ A number of test projects for the purpose of learning 3D modeling in Processing
 - [ ] Importing models (.OBJ)
   - Download a human skeleton (?????)
   - Possibly creating custom models in Blender
-- [ ] ~~Moving/dragging individual objects considering 3D hierarchical human
-- [ ] ~~Working with the Kinetic Library
+- [ ] ~~Moving/dragging individual objects considering 3D hierarchical human~~
+- [ ] ~~Working with the Kinetic Library~~
 - [ ] Check physical simulation (gravity, etc) + collision
 - [ ] Research Hierarchical Modeling concepts
 
