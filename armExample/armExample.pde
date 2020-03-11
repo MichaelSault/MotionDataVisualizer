@@ -4,70 +4,61 @@ import shapes3d.ShapeGroup;
 
 import processing.opengl.*;
 
-float left = 0.0;
+float left = 4.7;
 float up = 0.0;
 float turn = 0.0;
 float left1 = 0.0;
 float up1 = 0.0;
 float turn1 = 0.0;
-Box base;
+float forward = 250.0;
+float sideways = 0;
+Box claw;
 Box arm;
 Box stand;
+
+Box base;
 
 
 void setup() {
   fullScreen(P3D);
   noFill();
   
-  base = new Box(50,100,50);
-  base.fill(randomColor());
+  claw = new Box(50,100,50);
+  claw.fill(randomColor());
   
   arm = new Box(40, 40, 250);
   arm.fill(randomColor());
   
   stand = new Box(50, 125, 50);
+  stand.fill(randomColor());
+  
+  base = new Box(200, 50, 200);
+  base.fill(randomColor());
 }
 
 void draw() {
   background(0);
   keyPressedIsCheckedContinuusly();
   pushMatrix();
-  translate(width/2, height/2, -200);
- 
+  translate(width/2, height/2+200, -200);
   
-  rotateY(left1); //yrot);
+  //draw base
+  translate(sideways, 0, forward);
+  base.draw(getGraphics());
+ 
+  translate(0, -75, 0);
+  rotateY(left); //yrot);
   stand.draw(getGraphics());
-  rotateX(up1);
-  translate(0, 0, 100);
+  translate(0, -50, 0);
+  rotateX(up);
+  translate(0, 0, 110);
   stroke(255, 0, 0);
   arm.draw(getGraphics());
   
- 
-  // the box was drawn at (0, 0, 0), store that location
-  float x = modelX(0, 0, 0);
-  float y = modelY(0, 0, 0);
-  float z = modelZ(0, 0, 0);
-  // clear out all the transformations
-  popMatrix();
-
-  // draw another box at the same (x, y, z) coordinate as the other
-  pushMatrix();
-  translate(x, y, z);
-  // rotate around itself
-  base.rotateByY(left/100); //yrot);
-  base.rotateByX(up/100); //zrot);
-  translate(0, 0, 0);
-  
-  
-  
-  //rotate with the arm
-  rotateY(left1); //yrot);
-  rotateX(up1); //zrot);
- 
-  translate(0, 0, 125);
-  // draw a white box outline at (0, 0, 0)
+  rotateZ(turn); //zrot);
+  translate(0, 0, 150);
   stroke(255);
-  base.draw(getGraphics());
+  claw.draw(getGraphics());
   
   popMatrix();
   
@@ -78,26 +69,46 @@ void draw() {
 void keyPressedIsCheckedContinuusly() {
  
   if (keyPressed) {
-    if (key == 'a' || key == 'A'){
-      left -= 0.01;
-    } else if (key == 'd' || key == 'D'){
-      left += 0.01;
-    } else if (key == 'w' || key == 'W'){
-      up += 0.01;
-    } else if (key == 's' || key == 'S'){
-      up -= 0.01;
+    if (key == '7'){
+      turn += 0.01;
+    } else if (key == '9'){
+        turn -= 0.01;
     } else if (key == '4'){
-      left1 -= 0.01;
+      if ((left >= -0.1) && (left < 6.28)){
+        left += 0.01;
+        println("rad:" + left);
+       
+      }
     } else if (key == '6'){
-      left1 += 0.01;
+      if ((left > 0) && (left <= 6.29)){
+        left -= 0.01;
+        println("rad:" + left);
+      }
     } else if (key == '8'){
-      up1 += 0.01;
+      if (up < 0.78){
+        up += 0.01;
+      }
     } else if (key == '5'){
-      up1 -= 0.01;
-    } 
-  } else {
-      left = 0;
-      up = 0;
+      if (up > 0.0){
+        up -= 0.01;
+      }
+    } else if ((key == 's')||(key == 'S')){
+      if (forward < 500){
+        forward += 1;
+      }
+    } else if ((key == 'w')||(key == 'W')){
+      if (forward > 0){
+        forward -= 1;
+      }
+    } else if ((key == 'a')||(key == 'A')){
+      if (sideways > -250){
+        sideways -= 1;
+      }
+    } else if ((key == 'd')||(key == 'D')){
+      if (sideways < 250){
+        sideways += 1;
+      }
+    }
   }
   
 }
