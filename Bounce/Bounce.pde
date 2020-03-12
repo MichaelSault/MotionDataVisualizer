@@ -37,7 +37,6 @@ void draw() {
 
   // Bouncing ball
   pushMatrix();
-  rotateX(-PI/8);
   translate(x, y, z);
   rectMode(CENTER);
   strokeWeight(1);
@@ -61,7 +60,8 @@ void draw() {
   }
 
   z=z+zs;
-  if (z > 750 || z < 50) {
+  println(z);
+  if (z > 350 || z < -350) {
     z=z-zs;
     zs=-zs;
   }
