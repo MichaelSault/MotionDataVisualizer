@@ -12,7 +12,7 @@ float[] az = new float[num];
 
 void setup() 
 {
-  size(640, 360, P3D);
+  fullScreen(P3D);
   
   cam = new PeasyCam(this, 0, 0, 0, 50);
   cam.setMinimumDistance(-1000);

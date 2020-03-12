@@ -20,7 +20,7 @@ Box base;
 
 
 void setup() {
-  fullScreen(P3D);
+  size(1280, 720, P3D);
   noFill();
   
   claw = new Box(50,100,50);
@@ -69,26 +69,23 @@ void draw() {
 void keyPressedIsCheckedContinuusly() {
  
   if (keyPressed) {
-    if (key == '7'){
+    if ((key == 'u')||(key == 'U')){
       turn += 0.01;
-    } else if (key == '9'){
+    } else if ((key == 'o')||(key == 'O')){
         turn -= 0.01;
-    } else if (key == '4'){
+    } else if ((key == 'j')||(key == 'J')){
       if ((left >= -0.1) && (left < 6.28)){
-        left += 0.01;
-        println("rad:" + left);
-       
+        left += 0.01;       
       }
-    } else if (key == '6'){
+    } else if ((key == 'l')||(key == 'L')){
       if ((left > 0) && (left <= 6.29)){
         left -= 0.01;
-        println("rad:" + left);
       }
-    } else if (key == '8'){
+    } else if ((key == 'i')||(key == 'I')){
       if (up < 0.78){
         up += 0.01;
       }
-    } else if (key == '5'){
+    } else if ((key == 'k')||(key == 'K')){
       if (up > 0.0){
         up -= 0.01;
       }

@@ -5,6 +5,8 @@ import shapes3d.ShapeGroup;
 import processing.opengl.*;
 
 Box base;
+Box second;
+Box parent;
 
 ShapeGroup group1;
 
@@ -23,9 +25,20 @@ void setup(){
   
   //define body
   base = new Box(100,100,100);
+  base.moveTo(-150, 0, 0);
   base.fill(randomColor());
   
+  second = new Box (100, 100, 100);
+  second.moveTo(150, 0, 0);
+  second.fill(randomColor());
+  
+  parent = new Box (75, 75, 75);
+  parent.moveTo(0, 0, 0);
+  parent.fill(randomColor());
+  
   group1.addChild(base);
+  group1.addChild(second);
+  group1.addChild(parent);
   group1.moveTo(width/2.0, height/2.0, 0);
   
 }
@@ -44,6 +57,28 @@ void draw(){
     if(picked != null){
       if (picked.shape == base){
         if (left == 1){
+           base.rotateBy(0, -0.01, 0);
+        } else if (left == -1){
+           base.rotateBy(0, 0.01, 0);
+        }
+        if (up == 1){
+           base.rotateBy(0.01, 0, 0);
+        } else if (up == -1){
+           base.rotateBy(-0.01, 0, 0);
+        }
+      }  else if (picked.shape == second){
+        if (left == 1){
+           second.rotateBy(0, -0.01, 0);
+        } else if (left == -1){
+           second.rotateBy(0, 0.01, 0);
+        }
+        if (up == 1){
+           second.rotateBy(0.01, 0, 0);
+        } else if (up == -1){
+           second.rotateBy(-0.01, 0, 0);
+        }
+      }  else if (picked.shape == parent){
+        if (left == 1){
            group1.rotateBy(0, -0.01, 0);
         } else if (left == -1){
            group1.rotateBy(0, 0.01, 0);
@@ -53,7 +88,7 @@ void draw(){
         } else if (up == -1){
            group1.rotateBy(-0.01, 0, 0);
         }
-      }  
+      }   
   } else if(picked == null){
       mouseClicked = false;
     }
