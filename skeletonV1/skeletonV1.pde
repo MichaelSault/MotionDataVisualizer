@@ -27,6 +27,8 @@ Box leftLowLeg;
 Box rightUpLeg;
 Box rightLowLeg;
 
+Ellipsoid head;
+
 
 void setup() {
   size(1280, 720, P3D);
@@ -65,8 +67,9 @@ void setup() {
   rightLowLeg = new Box(10, 100, 10);
   rightLowLeg.fill(randomColor());
   
-  
-  
+  //define the head
+  head = new Ellipsoid(30, 25, 25);
+  head.fill(randomColor());
 }
 
 void draw() {
@@ -75,21 +78,24 @@ void draw() {
   pushMatrix();
   translate(width/2, height/2+200, -200);
   
-  ////draw base
+  //affects the entire skeleton as is is before any object is drawn
   translate(sideways, 0, forward);
-  //base.draw(getGraphics());
- 
- //full body/ spinal translations
   translate(0, -200, 0);
-  rotateY(left); //yrot);
+  rotateY(left); 
+  
+  //full body/ spinal translations
   spine.draw(getGraphics());
   translate(0, -80, 0);
   shoulders.draw(getGraphics());
   translate(0, 180, 0);
   hips.draw(getGraphics());
   
+  //translations for the head
+  translate(0, -220, 0);
+  head.draw(getGraphics());
+  
   //translations for left arm
-  translate(0, -130, 65);
+  translate(0, 90, 65);
   leftUpArm.draw(getGraphics());
   translate(0, 90, 0);
   leftLowArm.draw(getGraphics());
