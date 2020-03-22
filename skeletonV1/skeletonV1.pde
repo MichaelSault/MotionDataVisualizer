@@ -4,15 +4,20 @@ import shapes3d.ShapeGroup;
 
 import processing.opengl.*;
 
-float left = 4.7;
+//declare tranformation vars
+float left1 = 4.7;
 float up = 0.0;
 float turn = 0.0;
-float left1 = 0.0;
+float left2 = 0.0;
 float up1 = 0.0;
 float turn1 = 0.0;
 float forward = 250.0;
 float sideways = 0;
+boolean mouseClicked = false;
 
+int bone = 1;
+
+//declaire skeleton shapes
 Box spine;
 Box shoulders;
 Box hips;
@@ -29,7 +34,11 @@ Box rightLowLeg;
 
 Ellipsoid head;
 
+Picked picked = null;
 
+
+
+//set up function defines the defaults of the shapes/canvas
 void setup() {
   size(1280, 720, P3D);
   noFill();
@@ -72,16 +81,56 @@ void setup() {
   head.fill(randomColor());
 }
 
+
+//draws the shapes and applies the transformations/translations
 void draw() {
   background(0);
   keyPressedIsCheckedContinuusly();
+  
+  
+  
+  
   pushMatrix();
   translate(width/2, height/2+200, -200);
+  
+  if(mouseClicked){
+    picked = Shape3D.pick(this, getGraphics(), mouseX, mouseY);
+    if (picked != null) {
+      if ((picked.shape == spine)||(picked.shape == hips)||(picked.shape == shoulders)){
+        bone = 1;
+      } else if (picked.shape == head) {
+        bone = 2;
+      } else if (picked.shape == leftUpArm) {
+        bone = 3;
+      } else if (picked.shape == leftLowArm) {
+        bone = 4;
+      } else if (picked.shape == rightUpArm) {
+        bone = 5;
+      } else if (picked.shape == rightLowArm) {
+        bone = 6;
+      } else if (picked.shape == leftUpLeg) {
+        bone = 7;
+      } else if (picked.shape == leftLowLeg) {
+        bone = 8;
+      } else if (picked.shape == rightUpLeg) {
+        bone = 9;
+      } else if (picked.shape == rightLowLeg) {
+        bone = 10;
+      }
+    } else if (picked == null){
+      mouseClicked = false;
+    }
+  }
   
   //affects the entire skeleton as is is before any object is drawn
   translate(sideways, 0, forward);
   translate(0, -200, 0);
-  rotateY(left); 
+  
+  println(picked);
+  
+  rotateY(left1);
+  
+  
   
   //full body/ spinal translations
   spine.draw(getGraphics());
@@ -90,40 +139,57 @@ void draw() {
   translate(0, 180, 0);
   hips.draw(getGraphics());
   
-  //translations for the head
+  //moves head into position
   translate(0, -220, 0);
+ 
+  //starts matrix for the head
+  pushMatrix();
+  //translations for the head
+  rotateY(left2);
   head.draw(getGraphics());
+  popMatrix();
   
   //translations for left arm
   translate(0, 90, 65);
+  pushMatrix();
   leftUpArm.draw(getGraphics());
+  pushMatrix();
   translate(0, 90, 0);
   leftLowArm.draw(getGraphics());
-  
-  //translations for right arm
-  translate(0, -90, -130);
-  rightUpArm.draw(getGraphics());
-  translate(0, 90, 0);
-  rightLowArm.draw(getGraphics());
-  
-  //translations for left leg
-  translate(0, 80, 115);
-  leftUpLeg.draw(getGraphics());
-  translate(0, 90, 0);
-  leftLowLeg.draw(getGraphics());
-  
-  
-  //translations for right leg
-  translate(0, -90, -100);
-  rightUpLeg.draw(getGraphics());
-  translate(0, 90, 0);
-  rightLowLeg.draw(getGraphics());
-  
-  
-  
-  
+  popMatrix();
   popMatrix();
   
+  //translations for right arm
+  translate(0, 0, -130);
+  pushMatrix();
+  rightUpArm.draw(getGraphics());
+  pushMatrix();
+  translate(0, 90, 0);
+  rightLowArm.draw(getGraphics());
+  popMatrix();
+  popMatrix();
+  
+  //translations for left leg
+  translate(0, 170, 115);
+  pushMatrix();
+  leftUpLeg.draw(getGraphics());
+  pushMatrix();
+  translate(0, 90, 0);
+  leftLowLeg.draw(getGraphics());
+  popMatrix();
+  popMatrix();
+  
+  //translations for right leg
+  translate(0, 0, -100);
+  pushMatrix();
+  rightUpLeg.draw(getGraphics());
+  pushMatrix();
+  translate(0, 90, 0);
+  rightLowLeg.draw(getGraphics());
+  popMatrix();
+  popMatrix();
+  
+  popMatrix();
   
 } 
 
@@ -136,12 +202,18 @@ void keyPressedIsCheckedContinuusly() {
     } else if ((key == 'o')||(key == 'O')){
         turn -= 0.01;
     } else if ((key == 'j')||(key == 'J')){
-      if (left > 0){
-        left -= 0.01;       
+      if (bone == 1){
+        left1 -= 0.01;       
+      }
+      else if (bone == 2){
+        left2 -= 0.01;       
       }
     } else if ((key == 'l')||(key == 'L')){
-      if (left < 6.28){
-        left += 0.01;
+      if (bone == 1){
+        left1 += 0.01;       
+      }
+      else if (bone == 2){
+        left2 += 0.01;       
       }
     } else if ((key == 'i')||(key == 'I')){
       if (up < 0.78){
@@ -175,4 +247,9 @@ void keyPressedIsCheckedContinuusly() {
 //==========================================================================
 int randomColor(){
   return color(random(0,255), random(0,255), random(0,255));
+}
+
+//==========================================================================
+void mouseClicked(){
+  mouseClicked = true;
 }
