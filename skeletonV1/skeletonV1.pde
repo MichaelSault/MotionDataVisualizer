@@ -5,10 +5,20 @@ import shapes3d.ShapeGroup;
 import processing.opengl.*;
 
 //declare tranformation vars
-float left1 = 4.7;
+float moveLeftSpine = 4.7;
+float moveLeftHead = 0.0;
+float moveLeftLUA = 0.0;
+float moveLeftLLA = 0.0;
+float moveLeftRUA = 0.0;
+float moveLeftRLA = 0.0;
+float moveLeftLUL = 0.0;
+float moveLeftLLL = 0.0;
+float moveLeftRUL = 0.0;
+float moveLeftRLL = 0.0;
+
 float up = 0.0;
 float turn = 0.0;
-float left2 = 0.0;
+
 float up1 = 0.0;
 float turn1 = 0.0;
 float forward = 250.0;
@@ -92,7 +102,7 @@ void draw() {
   
   pushMatrix();
   translate(width/2, height/2+200, -200);
-  
+
   if(mouseClicked){
     picked = Shape3D.pick(this, getGraphics(), mouseX, mouseY);
     if (picked != null) {
@@ -128,7 +138,7 @@ void draw() {
   
   println(picked);
   
-  rotateY(left1);
+  rotateY(moveLeftSpine);
   
   
   
@@ -145,7 +155,7 @@ void draw() {
   //starts matrix for the head
   pushMatrix();
   //translations for the head
-  rotateY(left2);
+  rotateY(moveLeftHead);
   head.draw(getGraphics());
   popMatrix();
   
@@ -195,26 +205,77 @@ void draw() {
 
 //=======================================================================
 void keyPressedIsCheckedContinuusly() {
- 
+
   if (keyPressed) {
     if ((key == 'u')||(key == 'U')){
       turn += 0.01;
     } else if ((key == 'o')||(key == 'O')){
         turn -= 0.01;
     } else if ((key == 'j')||(key == 'J')){
-      if (bone == 1){
-        left1 -= 0.01;       
+      if (bone == 1){ //bone 1 is spine
+        moveLeftSpine -= 0.01;       
       }
-      else if (bone == 2){
-        left2 -= 0.01;       
+      else if (bone == 2){ //bone 2 is head
+        moveLeftHead -= 0.01;       
       }
+      else if (bone == 3){ //bone 2 is head
+        moveLeftLUA -= 0.01;       
+      }
+      else if (bone == 4){ //bone 2 is head
+        moveLeftLLA -= 0.01;       
+      }
+      else if (bone == 5){ //bone 2 is head
+        moveLeftRUA -= 0.01;       
+      }
+      else if (bone == 6){ //bone 2 is head
+        moveLeftRLA -= 0.01;       
+      }
+      else if (bone == 7){ //bone 2 is head
+        moveLeftLUL -= 0.01;       
+      }
+      else if (bone == 8){ //bone 2 is head
+        moveLeftLLL -= 0.01;       
+      }
+      else if (bone == 9){ //bone 2 is head
+        moveLeftRUL -= 0.01;       
+      }
+      else if (bone == 10){ //bone 2 is head
+        moveLeftRLL -= 0.01;       
+      }
+      
+      
     } else if ((key == 'l')||(key == 'L')){
-      if (bone == 1){
-        left1 += 0.01;       
+      if (bone == 1){ //bone 1 is spine
+        moveLeftSpine += 0.01;       
       }
-      else if (bone == 2){
-        left2 += 0.01;       
+      else if (bone == 2){ //bone 2 is head
+        moveLeftHead += 0.01;       
       }
+      else if (bone == 3){ //bone 2 is head
+        moveLeftLUA += 0.01;       
+      }
+      else if (bone == 4){ //bone 2 is head
+        moveLeftLLA += 0.01;       
+      }
+      else if (bone == 5){ //bone 2 is head
+        moveLeftRUA += 0.01;       
+      }
+      else if (bone == 6){ //bone 2 is head
+        moveLeftRLA += 0.01;       
+      }
+      else if (bone == 7){ //bone 2 is head
+        moveLeftLUL += 0.01;       
+      }
+      else if (bone == 8){ //bone 2 is head
+        moveLeftLLL += 0.01;       
+      }
+      else if (bone == 9){ //bone 2 is head
+        moveLeftRUL += 0.01;       
+      }
+      else if (bone == 10){ //bone 2 is head
+        moveLeftRLL += 0.01;       
+      }
+      
     } else if ((key == 'i')||(key == 'I')){
       if (up < 0.78){
         up += 0.01;
@@ -223,22 +284,22 @@ void keyPressedIsCheckedContinuusly() {
       if (up > 0.0){
         up -= 0.01;
       }
-    } else if ((key == 's')||(key == 'S')){
-      if (forward < 500){
-        forward += 1;
-      }
-    } else if ((key == 'w')||(key == 'W')){
-      if (forward > 0){
-        forward -= 1;
-      }
-    } else if ((key == 'a')||(key == 'A')){
-      if (sideways > -250){
-        sideways -= 1;
-      }
-    } else if ((key == 'd')||(key == 'D')){
-      if (sideways < 250){
-        sideways += 1;
-      }
+    //} else if ((key == 's')||(key == 'S')){
+    //  if (forward < 500){
+    //    forward += 1;
+    //  }
+    //} else if ((key == 'w')||(key == 'W')){
+    //  if (forward > 0){
+    //    forward -= 1;
+    //  }
+    //} else if ((key == 'a')||(key == 'A')){
+    //  if (sideways > -250){
+    //    sideways -= 1;
+    //  }
+    //} else if ((key == 'd')||(key == 'D')){
+    //  if (sideways < 250){
+    //    sideways += 1;
+    //  }
     }
   }
   
