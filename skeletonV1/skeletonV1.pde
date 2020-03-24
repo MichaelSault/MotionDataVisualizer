@@ -160,27 +160,37 @@ void draw() {
   popMatrix();
   
   //translations for left arm
-  translate(0, 90, 65);
+  translate(0, 40, 65);
+  
   pushMatrix();
+  rotateZ(moveLeftLUA);
+  translate(0, 50, 0);
   leftUpArm.draw(getGraphics());
   pushMatrix();
-  translate(0, 90, 0);
+  translate(0, 50, 0);
+  rotateZ(moveLeftLLA);
+  translate(0, 40, 0);
   leftLowArm.draw(getGraphics());
   popMatrix();
   popMatrix();
   
   //translations for right arm
-  translate(0, 0, -130);
+  translate(0, 10, -130);
+  
   pushMatrix();
+  rotateZ(moveLeftRUA);
+  translate(0, 40, 0);
   rightUpArm.draw(getGraphics());
   pushMatrix();
-  translate(0, 90, 0);
+  translate(0, 50, 0);
+  rotateZ(moveLeftRLA);
+  translate(0, 40, 0);
   rightLowArm.draw(getGraphics());
   popMatrix();
   popMatrix();
   
   //translations for left leg
-  translate(0, 170, 115);
+  translate(0, 210, 115);
   pushMatrix();
   leftUpLeg.draw(getGraphics());
   pushMatrix();
