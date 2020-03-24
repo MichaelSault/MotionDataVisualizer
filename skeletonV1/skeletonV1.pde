@@ -164,12 +164,12 @@ void draw() {
   
   pushMatrix();
   rotateZ(moveLeftLUA);
-  translate(0, 50, 0);
+  translate(0, 50, 0); //moves the rotation point of the limb away from center
   leftUpArm.draw(getGraphics());
   pushMatrix();
   translate(0, 50, 0);
   rotateZ(moveLeftLLA);
-  translate(0, 40, 0);
+  translate(0, 40, 0); //moves the rotation point of the limb away from center
   leftLowArm.draw(getGraphics());
   popMatrix();
   popMatrix();
@@ -179,22 +179,26 @@ void draw() {
   
   pushMatrix();
   rotateZ(moveLeftRUA);
-  translate(0, 40, 0);
+  translate(0, 40, 0); //moves the rotation point of the limb away from center
   rightUpArm.draw(getGraphics());
   pushMatrix();
   translate(0, 50, 0);
   rotateZ(moveLeftRLA);
-  translate(0, 40, 0);
+  translate(0, 40, 0); //moves the rotation point of the limb away from center
   rightLowArm.draw(getGraphics());
   popMatrix();
   popMatrix();
   
   //translations for left leg
-  translate(0, 210, 115);
+  translate(0, 170, 115);
   pushMatrix();
+  rotateZ(moveLeftLUL);
+  translate(0, 40, 0);
   leftUpLeg.draw(getGraphics());
   pushMatrix();
-  translate(0, 90, 0);
+  translate(0, 40, 0);
+  rotateZ(moveLeftLLL);
+  translate(0, 50, 0);
   leftLowLeg.draw(getGraphics());
   popMatrix();
   popMatrix();
@@ -202,9 +206,13 @@ void draw() {
   //translations for right leg
   translate(0, 0, -100);
   pushMatrix();
+  rotateZ(moveLeftRUL);
+  translate(0, 40, 0);
   rightUpLeg.draw(getGraphics());
   pushMatrix();
-  translate(0, 90, 0);
+  translate(0, 40, 0);
+  rotateZ(moveLeftRLL);
+  translate(0, 50, 0);
   rightLowLeg.draw(getGraphics());
   popMatrix();
   popMatrix();
@@ -217,72 +225,72 @@ void draw() {
 void keyPressedIsCheckedContinuusly() {
 
   if (keyPressed) {
-    if ((key == 'u')||(key == 'U')){
+    if ((key == 'q')||(key == 'Q')){
       turn += 0.01;
-    } else if ((key == 'o')||(key == 'O')){
+    } else if ((key == 'e')||(key == 'E')){
         turn -= 0.01;
-    } else if ((key == 'j')||(key == 'J')){
+    } else if ((key == 'a')||(key == 'A')){
       if (bone == 1){ //bone 1 is spine
         moveLeftSpine -= 0.01;       
       }
       else if (bone == 2){ //bone 2 is head
         moveLeftHead -= 0.01;       
       }
-      else if (bone == 3){ //bone 2 is head
+      else if (bone == 3){ //bone 3 is left upper arm
         moveLeftLUA -= 0.01;       
       }
-      else if (bone == 4){ //bone 2 is head
+      else if (bone == 4){ //bone 4 is left lower arm
         moveLeftLLA -= 0.01;       
       }
-      else if (bone == 5){ //bone 2 is head
+      else if (bone == 5){ //bone 5 is right upper arm
         moveLeftRUA -= 0.01;       
       }
-      else if (bone == 6){ //bone 2 is head
+      else if (bone == 6){ //bone 6 is right lower arm
         moveLeftRLA -= 0.01;       
       }
-      else if (bone == 7){ //bone 2 is head
+      else if (bone == 7){ //bone 7 is left upper leg
         moveLeftLUL -= 0.01;       
       }
-      else if (bone == 8){ //bone 2 is head
+      else if (bone == 8){ //bone 8 is left lower leg
         moveLeftLLL -= 0.01;       
       }
-      else if (bone == 9){ //bone 2 is head
+      else if (bone == 9){ //bone 9 is right upper leg
         moveLeftRUL -= 0.01;       
       }
-      else if (bone == 10){ //bone 2 is head
+      else if (bone == 10){ //bone 10 is right lower leg
         moveLeftRLL -= 0.01;       
       }
       
       
-    } else if ((key == 'l')||(key == 'L')){
+    } else if ((key == 'd')||(key == 'D')){
       if (bone == 1){ //bone 1 is spine
         moveLeftSpine += 0.01;       
       }
       else if (bone == 2){ //bone 2 is head
         moveLeftHead += 0.01;       
       }
-      else if (bone == 3){ //bone 2 is head
+      else if (bone == 3){ //bone 3 is left upper arm
         moveLeftLUA += 0.01;       
       }
-      else if (bone == 4){ //bone 2 is head
+      else if (bone == 4){ //bone 4 is left lower arm
         moveLeftLLA += 0.01;       
       }
-      else if (bone == 5){ //bone 2 is head
+      else if (bone == 5){ //bone 5 is right upper arm
         moveLeftRUA += 0.01;       
       }
-      else if (bone == 6){ //bone 2 is head
+      else if (bone == 6){ //bone 6 is right lower arm
         moveLeftRLA += 0.01;       
       }
-      else if (bone == 7){ //bone 2 is head
+      else if (bone == 7){ //bone 7 is left upper leg
         moveLeftLUL += 0.01;       
       }
-      else if (bone == 8){ //bone 2 is head
+      else if (bone == 8){ //bone 8 is left lower leg
         moveLeftLLL += 0.01;       
       }
-      else if (bone == 9){ //bone 2 is head
+      else if (bone == 9){ //bone 9 is right upper leg
         moveLeftRUL += 0.01;       
       }
-      else if (bone == 10){ //bone 2 is head
+      else if (bone == 10){ //bone 10 is right lower leg
         moveLeftRLL += 0.01;       
       }
       
