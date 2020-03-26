@@ -5,12 +5,12 @@ A number of test projects for the purpose of learning 3D modeling in Processing
 ----
 ### March 26, 2020
 #### To Do:
-- [ ] Implement Various Joints
-  - [ ] Ball/Socket Joints
-  - [ ] Hinge Joint
-  - [ ] Scapular Joint
-  - [ ] Saddle Joint
-- [ ] Build a human outline/skeleton that implenets the above joints
+- [x] Implement Various Joints
+  - [x] Ball/Socket Joints
+  - [x] Hinge Joint
+  - [x] Scapular Joint
+  - [ ] ~~Saddle Joint~~
+- [x] Build a human outline/skeleton that implenets the above joints
 - [ ] Find an example of motion data
   - [ ] Check out accosiated skeleton
   - [ ] Make a comparable skeleton that works with motion data
