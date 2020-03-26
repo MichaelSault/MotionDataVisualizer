@@ -162,8 +162,7 @@ void draw() {
   translate(sideways, 0, forward);
   translate(0, -200, 0);
   
-  println(picked);
-  
+  //full body rotation
   rotateY(moveLeftSpine);
   
   
@@ -191,13 +190,13 @@ void draw() {
   
   pushMatrix();
   rotateX(moveLeftLUA);
-  rotateY(turnLUA);
+  rotateY(moveLeftLLA); //because when you try to move your lower arm, you must turn your upper arm
   rotateZ(moveUpLUA);
   translate(0, 50, 0); //moves the rotation point of the limb away from center
   leftUpArm.draw(getGraphics());
   pushMatrix();
   translate(0, 50, 0);
-  rotateX(moveLeftLLA);
+  //rotateX(moveLeftLLA);
   rotateY(turnLLA);
   rotateZ(moveUpLLA);
   translate(0, 40, 0); //moves the rotation point of the limb away from center
@@ -206,16 +205,17 @@ void draw() {
   popMatrix();
   
   //translations for right arm
-  translate(0, 10, -130);
+  translate(0, 0, -130);
   
   pushMatrix();
   rotateX(moveLeftRUA);
+  rotateY(moveLeftRLA);
   rotateZ(moveUpRUA);
-  translate(0, 40, 0); //moves the rotation point of the limb away from center
+  translate(0, 50, 0); //moves the rotation point of the limb away from center
   rightUpArm.draw(getGraphics());
   pushMatrix();
   translate(0, 50, 0);
-  rotateX(moveLeftRLA);
+  rotateY(turnRLA);
   rotateZ(moveUpRLA);
   translate(0, 40, 0); //moves the rotation point of the limb away from center
   rightLowArm.draw(getGraphics());
@@ -223,15 +223,16 @@ void draw() {
   popMatrix();
   
   //translations for left leg
-  translate(0, 170, 115);
+  translate(0, 180, 115);
   pushMatrix();
   rotateX(moveLeftLUL);
+  rotateY(moveLeftLLL);
   rotateZ(moveUpLUL);
   translate(0, 40, 0);
   leftUpLeg.draw(getGraphics());
   pushMatrix();
   translate(0, 40, 0);
-  rotateZ(moveLeftLLL);
+  rotateZ(moveUpLLL);
   translate(0, 50, 0);
   leftLowLeg.draw(getGraphics());
   popMatrix();
@@ -241,12 +242,13 @@ void draw() {
   translate(0, 0, -100);
   pushMatrix();
   rotateX(moveLeftRUL);
+  rotateY(moveLeftRLL);
   rotateZ(moveUpRUL);
   translate(0, 40, 0);
   rightUpLeg.draw(getGraphics());
   pushMatrix();
   translate(0, 40, 0);
-  rotateZ(moveLeftRLL);
+  rotateZ(moveUpRLL);
   translate(0, 50, 0);
   rightLowLeg.draw(getGraphics());
   popMatrix();
@@ -331,32 +333,67 @@ void keyPressedIsCheckedContinuusly() {
       else if (bone == 2){ //bone 2 is head
         moveLeftHead -= 0.01;       
       }
+      
       else if (bone == 3){ //bone 3 is left upper arm
-        if (moveLeftLUA < 3.14){
-          moveLeftLUA += 0.01;
-        }         
+        if(moveUpLUA > -1.4){  
+          if (moveLeftLUA < 1.57){
+            moveLeftLUA += 0.01;
+          }
+        } else if (moveUpLUA < -1.4){
+          if (moveLeftLUA > -1.57){
+             moveLeftLUA -= 0.01;
+          }
+        }
       }
+        
       else if (bone == 4){ //bone 4 is left lower arm
-          moveLeftLLA += 0.01;
+          if (moveLeftLLA > -0.78){
+            moveLeftLLA -= 0.01;
+          }
       }
-      else if (bone == 5){ //bone 5 is right upper arm
-        moveLeftRUA += 0.01;       
+      else if (bone == 5){ //bone 5 is left upper arm
+        if(moveUpRUA > -1.4){  
+          if (moveLeftRUA < 0.32){
+             moveLeftRUA += 0.01;
+          }
+        } else if (moveUpRUA < -1.4){
+          if (moveLeftRUA > -0.32){
+            moveLeftRUA -= 0.01;
+          } 
+        }
       }
       else if (bone == 6){ //bone 6 is right lower arm
-        moveLeftRLA += 0.01;       
+        if (moveLeftRLA > -1.13){
+          moveLeftRLA -= 0.01;
+        }
       }
+      
+      //legs--------------------------------------------------------
       else if (bone == 7){ //bone 7 is left upper leg
-        moveLeftLUL += 0.01;       
+        if (moveLeftLUL < 0.69){
+          moveLeftLUL += 0.01;
+          println("lul:" + moveLeftLUL);
+        }
       }
       else if (bone == 8){ //bone 8 is left lower leg
-        moveLeftLLL += 0.01;       
+        if (moveLeftLLL > -0.69){
+          moveLeftLLL -= 0.01;
+          println("lll:" + moveLeftLLL);
+        }
       }
       else if (bone == 9){ //bone 9 is right upper leg
-        moveLeftRUL += 0.01;       
+        if (moveLeftRUL < 0.26){
+          moveLeftRUL += 0.01;
+          println("rul:" + moveLeftRUL);
+        }
       }
       else if (bone == 10){ //bone 10 is right lower leg
-        moveLeftRLL += 0.01;       
+        if (moveLeftRLL > -0.26){
+          moveLeftRLL -= 0.01;
+          println("rll:" + moveLeftRLL);
+        }
       }
+     //endlegs--------------------------------------------------------
       
       
     } else if ((key == 'd')||(key == 'D')){
@@ -367,31 +404,65 @@ void keyPressedIsCheckedContinuusly() {
         moveLeftHead += 0.01;       
       }
       else if (bone == 3){ //bone 3 is left upper arm
-        if (moveLeftLUA > -0.17){
-          moveLeftLUA -= 0.01;
-        }       
+        if(moveUpLUA > -1.4){  
+          if (moveLeftLUA > -0.32){
+             moveLeftLUA -= 0.01;
+          }
+        } else if (moveUpLUA < -1.4){
+          if (moveLeftLUA < 0.32){
+            moveLeftLUA += 0.01;
+          } 
+        }     
       }
       else if (bone == 4){ //bone 4 is left lower arm
-          moveLeftLLA -= 0.01;   
+          if (moveLeftLLA < 1.13){
+            moveLeftLLA += 0.01;
+          }
       }
       else if (bone == 5){ //bone 5 is right upper arm
-        moveLeftRUA -= 0.01;       
+        if(moveUpRUA > -1.4){  
+          if (moveLeftRUA > -1.57){
+             moveLeftRUA -= 0.01;
+          }
+        } else if (moveUpRUA < -1.4){
+          if (moveLeftRUA < 1.57){
+            moveLeftRUA += 0.01;
+          } 
+        }
       }
       else if (bone == 6){ //bone 6 is right lower arm
-        moveLeftRLA -= 0.01;       
+        if (moveLeftRLA < 0.78){
+            moveLeftRLA += 0.01;
+          }  
       }
+      
+      //legs--------------------------------------------------------
       else if (bone == 7){ //bone 7 is left upper leg
-        moveLeftLUL -= 0.01;       
+        if (moveLeftLUL > -0.26){
+          moveLeftLUL -= 0.01;
+          println("lul:" + moveLeftLUL);
+        }
       }
       else if (bone == 8){ //bone 8 is left lower leg
-        moveLeftLLL -= 0.01;       
+        if (moveLeftLLL < 0.26){
+          moveLeftLLL += 0.01;
+          println("lll:" + moveLeftLLL);
+        }
       }
       else if (bone == 9){ //bone 9 is right upper leg
-        moveLeftRUL -= 0.01;       
+        if (moveLeftRUL > -0.69){
+          moveLeftRUL -= 0.01;
+          println("rul:" + moveLeftRUL);
+        }
       }
       else if (bone == 10){ //bone 10 is right lower leg
-        moveLeftRLL -= 0.01;       
+        if (moveLeftRLL < 0.69){
+          moveLeftRLL += 0.01;
+          println("rll:" + moveLeftRLL);
+        }
       }
+     //endlegs--------------------------------------------------------
+
       
       
     } else if ((key == 'w')||(key == 'W')){
@@ -402,7 +473,7 @@ void keyPressedIsCheckedContinuusly() {
         moveUpHead -= 0.01;       
       }
       else if (bone == 3){ //bone 3 is left upper arm
-        if (moveUpLUA > -3.15){
+        if (moveUpLUA > -2.8){
           moveUpLUA -= 0.01;
         }      
       }
@@ -412,25 +483,43 @@ void keyPressedIsCheckedContinuusly() {
         }
       }
       else if (bone == 5){ //bone 5 is right upper arm
-        moveUpRUA -= 0.01;       
+        if (moveUpRUA > -2.8){
+          moveUpRUA -= 0.01;
+        }       
       }
       else if (bone == 6){ //bone 6 is right lower arm
         if (moveUpRLA > -2.62){
           moveUpRLA -= 0.01;
         }       
       }
+      
+      //legs--------------------------------------------------------
       else if (bone == 7){ //bone 7 is left upper leg
-        moveUpLUL -= 0.01;       
+        if (moveUpLUL > -1.74){
+          moveUpLUL -= 0.01;      
+          println("lul:" + moveUpLUL);
+        }
       }
       else if (bone == 8){ //bone 8 is left lower leg
-        moveUpLLL -= 0.01;       
+        if (moveUpLLL > 0){
+          moveUpLLL -= 0.01;
+          println("lll:" + moveUpLLL);
+        }
       }
       else if (bone == 9){ //bone 9 is right upper leg
-        moveUpRUL -= 0.01;       
+        if (moveUpRUL > -1.74){
+          moveUpRUL -= 0.01;
+          println("rul:" + moveUpRUL);
+        }
       }
       else if (bone == 10){ //bone 10 is right lower leg
-        moveUpRLL -= 0.01;       
+        if (moveUpRLL > 0){
+          moveUpRLL -= 0.01;    
+          println("rll:" + moveUpRLL);
+        }
       }
+     //endlegs--------------------------------------------------------
+
       
       
     } else if ((key == 's')||(key == 'S')){
@@ -451,25 +540,43 @@ void keyPressedIsCheckedContinuusly() {
         }
       }
       else if (bone == 5){ //bone 5 is right upper arm
-        moveUpRUA += 0.01;       
+        if (moveUpRUA < 0.79){
+          moveUpRUA += 0.01;
+        }        
       }
       else if (bone == 6){ //bone 6 is right lower arm
         if (moveUpRLA < 0.01){
           moveUpRLA += 0.01;
         }      
       }
+      
+      //legs--------------------------------------------------------
       else if (bone == 7){ //bone 7 is left upper leg
-        moveUpLUL += 0.01;       
+        if (moveUpLUL < 0.69){
+          moveUpLUL += 0.01;   
+          println("lul:" + moveUpLUL);
+        }
       }
       else if (bone == 8){ //bone 8 is left lower leg
-        moveUpLLL += 0.01;       
+        if (moveUpLLL < 2.5){
+          moveUpLLL += 0.01;
+          println("lll:" + moveUpLLL);
+        }
       }
       else if (bone == 9){ //bone 9 is right upper leg
-        moveUpRUL += 0.01;       
+        if (moveUpRUL < 0.69){
+          moveUpRUL += 0.01;
+          println("rul:" + moveUpRUL);
+        }
       }
       else if (bone == 10){ //bone 10 is right lower leg
-        moveUpRLL += 0.01;       
+        if (moveUpRLL < 2.5){
+          moveUpRLL += 0.01;   
+          println("rll:" + moveUpRLL);
+        }
       }
+      //endlegs--------------------------------------------------------
+
     }
   }
   
