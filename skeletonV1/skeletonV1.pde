@@ -16,6 +16,8 @@ float moveLeftLLL = 0.0;
 float moveLeftRUL = 0.0;
 float moveLeftRLL = 0.0;
 float leanBackHips = 0.0;
+float moveLeftLF = 0.0;
+float moveLeftRF = 0.0;
 
 
 //tranformation vars for Z-axis
@@ -30,6 +32,8 @@ float moveUpLLL = 0.0;
 float moveUpRUL = 0.0;
 float moveUpRLL = 0.0;
 float leanHips = 0.0;
+float moveUpLF =0.0;
+float moveUpRF =0.0;
 
 
 //tranformation vars for Y-axis
@@ -70,6 +74,9 @@ Box leftUpLeg;
 Box leftLowLeg;
 Box rightUpLeg;
 Box rightLowLeg;
+
+Box leftFoot;
+Box rightFoot;
 
 Ellipsoid head;
 //to better visualize the head movement
@@ -117,6 +124,15 @@ void setup() {
   rightUpLeg.fill(randomColor());
   rightLowLeg = new Box(10, 100, 10);
   rightLowLeg.fill(randomColor());
+  
+  //define left foot
+  leftFoot = new Box(50, 10, 20);
+  leftFoot.fill(randomColor());
+  
+  
+  //define left foot
+  rightFoot = new Box(50, 10, 20);
+  rightFoot.fill(randomColor());
   
   //define the head
   head = new Ellipsoid(30, 25, 25);
@@ -170,6 +186,12 @@ void draw() {
         bone = 11;
       } else if (picked.shape == shoulders) {
         bone = 12;
+      } else if (picked.shape == leftFoot) {
+        bone = 13;
+        println(bone);
+      } else if (picked.shape == rightFoot) {
+        bone = 14;
+        println(bone);
       }
     } else if (picked == null){
       mouseClicked = false;
@@ -211,19 +233,22 @@ void draw() {
   //starts matrix for the head
   pushMatrix();
     //translations for the head (needs work)
-    rotateX(turnHead);
-    rotateY(moveLeftHead);
-    rotateZ(moveUpHead);
     rotateY(rotHips);
     translate(-15, 220, 0);
     rotateX(leanHips);
+    
     rotateZ(leanBackHips);
     translate(15, -220, 0);
+    pushMatrix();
+    rotateX(turnHead);
+    rotateY(moveLeftHead);
+    rotateZ(moveUpHead);
     head.draw(getGraphics());
     translate(20, -5, 12);
     leftEye.draw(getGraphics());
     translate(0, 0, -24);
     rightEye.draw(getGraphics());
+    popMatrix();
   popMatrix();
   
   
@@ -287,6 +312,13 @@ void draw() {
       rotateZ(moveUpLLL);
       translate(0, 50, 0);
       leftLowLeg.draw(getGraphics());
+      pushMatrix();
+        translate(0, 50, 0);
+        rotateZ(moveUpLF);
+        rotateY(moveLeftLF);
+        translate(15, 0, 0);
+        leftFoot.draw(getGraphics());
+      popMatrix();
     popMatrix();
   popMatrix();
   
@@ -303,6 +335,13 @@ void draw() {
       rotateZ(moveUpRLL);
       translate(0, 50, 0);
       rightLowLeg.draw(getGraphics());
+      pushMatrix();
+        translate(0, 50, 0);
+        rotateZ(moveUpRF);
+        rotateY(moveLeftRF);
+        translate(15, 0, 0);
+        rightFoot.draw(getGraphics());
+      popMatrix();
     popMatrix();
   popMatrix();
   
@@ -429,6 +468,18 @@ void keyPressedIsCheckedContinuusly() {
           }
         }
       }
+      else if (bone == 13){
+        if (moveLeftLF > -0.53){
+          moveLeftLF -= 0.01;
+          println(moveLeftLF);
+        }
+      }
+      else if (bone == 14){
+        if (moveLeftRF > -0.53){
+          moveLeftRF -= 0.01;
+          println(moveLeftRF);
+        }
+      }
       
     //------------------------------------------------------------------
     //Moves Joints Right
@@ -518,6 +569,18 @@ void keyPressedIsCheckedContinuusly() {
         }
       }
       }
+      else if (bone == 13){
+        if (moveLeftLF < 0.53){
+          moveLeftLF += 0.01;
+          println(moveLeftLF);
+        }
+      }
+      else if (bone == 14){
+        if (moveLeftRF < 0.53){
+          moveLeftRF += 0.01;
+          println(moveLeftRF);
+        }
+      }
 
       
     //------------------------------------------------------------------
@@ -586,6 +649,18 @@ void keyPressedIsCheckedContinuusly() {
           println(leanBackHips);
         }
       }
+      else if (bone == 13){
+        if (moveUpLF > -0.17){
+          moveUpLF -= 0.01;
+          println(moveUpLF);
+        }
+      }
+      else if (bone == 14){
+        if (moveUpRF > -0.17){
+          moveUpRF -= 0.01;
+          println(moveUpRF);
+        }
+      }
 
 
       
@@ -651,7 +726,19 @@ void keyPressedIsCheckedContinuusly() {
       else if (bone == 11){
         if (leanBackHips > -0.53){
           leanBackHips -= 0.01;
-          println(leanBackHips);
+          //println(leanBackHips);
+        }
+      }
+      else if (bone == 13){
+        if (moveUpLF < 1){
+          moveUpLF += 0.01;
+          println(moveUpLF);
+        }
+      }
+      else if (bone == 14){
+        if (moveUpRF < 1){
+          moveUpRF += 0.01;
+          println(moveUpRF);
         }
       }
     }
