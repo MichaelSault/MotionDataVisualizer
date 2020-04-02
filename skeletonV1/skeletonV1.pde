@@ -19,6 +19,20 @@ float leanBackHips = 0.0;
 float moveLeftLF = 0.0;
 float moveLeftRF = 0.0;
 
+float moveLeftLIndex = 0.0;
+float moveLeftLMiddle = 0.0;
+float moveLeftLRing = 0.0;
+float moveLeftLPinky = 0.0;
+float moveLeftLThumb = 0.0;
+float moveLeftLWrist = 0.0;
+
+float moveLeftRIndex = 0.0;
+float moveLeftRMiddle = 0.0;
+float moveLeftRRing = 0.0;
+float moveLeftRPinky = 0.0;
+float moveLeftRThumb = 0.0;
+float moveLeftRWrist = 0.0;
+
 
 //tranformation vars for Z-axis
 float moveUpSpine = 4.7;
@@ -32,8 +46,22 @@ float moveUpLLL = 0.0;
 float moveUpRUL = 0.0;
 float moveUpRLL = 0.0;
 float leanHips = 0.0;
-float moveUpLF =0.0;
-float moveUpRF =0.0;
+float moveUpLF = 0.0;
+float moveUpRF = 0.0;
+
+float moveUpLIndex = 0.0;
+float moveUpLMiddle = 0.0;
+float moveUpLRing = 0.0;
+float moveUpLPinky = 0.0;
+float moveUpLThumb = 0.0;
+float moveUpLWrist = 0.0;
+
+float moveUpRIndex = 0.0;
+float moveUpRMiddle = 0.0;
+float moveUpRRing = 0.0;
+float moveUpRPinky = 0.0;
+float moveUpRThumb = 0.0;
+float moveUpRWrist = 0.0;
 
 
 //tranformation vars for Y-axis
@@ -82,6 +110,53 @@ Ellipsoid head;
 //to better visualize the head movement
 Ellipsoid leftEye;
 Ellipsoid rightEye;
+
+
+//left hand parts
+Box leftPalm;
+
+Box leftProxPhalIndex;
+Box leftMidPhalIndex;
+Box leftDistalPhalIndex;
+
+Box leftProxPhalMiddle;
+Box leftMidPhalMiddle;
+Box leftDistalPhalMiddle;
+
+Box leftProxPhalRing;
+Box leftMidPhalRing;
+Box leftDistalPhalRing;
+
+Box leftProxPhalPinky;
+Box leftMidPhalPinky;
+Box leftDistalPhalPinky;
+
+Box leftProxPhalThumb;
+Box leftDistalPhalThumb;
+Box leftMetacarpalThumb;
+
+//right hand parts
+Box rightPalm;
+
+Box rightProxPhalIndex;
+Box rightMidPhalIndex;
+Box rightDistalPhalIndex;
+
+Box rightProxPhalMiddle;
+Box rightMidPhalMiddle;
+Box rightDistalPhalMiddle;
+
+Box rightProxPhalRing;
+Box rightMidPhalRing;
+Box rightDistalPhalRing;
+
+Box rightProxPhalPinky;
+Box rightMidPhalPinky;
+Box rightDistalPhalPinky;
+
+Box rightProxPhalThumb;
+Box tightDistalPhalThumb;
+Box rightMetacarpalThumb;
 
 Picked picked = null;
 
