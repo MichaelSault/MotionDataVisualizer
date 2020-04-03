@@ -155,7 +155,7 @@ Box rightMidPhalPinky;
 Box rightDistalPhalPinky;
 
 Box rightProxPhalThumb;
-Box tightDistalPhalThumb;
+Box rightDistalPhalThumb;
 Box rightMetacarpalThumb;
 
 Picked picked = null;
@@ -263,11 +263,34 @@ void draw() {
         bone = 12;
       } else if (picked.shape == leftFoot) {
         bone = 13;
-        println(bone);
       } else if (picked.shape == rightFoot) {
         bone = 14;
-        println(bone);
+      } else if (picked.shape == leftPalm) {
+        bone = 15;
+      } else if ((picked.shape == leftProxPhalIndex)||(picked.shape == leftMidPhalIndex)||(picked.shape == leftDistalPhalIndex)) {
+        bone = 16;
+      } else if ((picked.shape == leftProxPhalMiddle)||(picked.shape == leftMidPhalMiddle)||(picked.shape == leftDistalPhalMiddle)) {
+        bone = 17;
+      } else if ((picked.shape == leftProxPhalRing)||(picked.shape == leftMidPhalRing)||(picked.shape == leftDistalPhalRing)) {
+        bone = 18;
+      } else if ((picked.shape == leftProxPhalPinky)||(picked.shape == leftMidPhalPinky)||(picked.shape == leftDistalPhalPinky)) {
+        bone = 19;
+      } else if ((picked.shape == leftProxPhalThumb)||(picked.shape == leftMetacarpalThumb)||(picked.shape == leftDistalPhalThumb)) {
+        bone = 20;
+      } else if (picked.shape == rightPalm) {
+        bone = 21;
+      } else if ((picked.shape == rightProxPhalIndex)||(picked.shape == rightMidPhalIndex)||(picked.shape == rightDistalPhalIndex)) {
+        bone = 22;
+      } else if ((picked.shape == rightProxPhalMiddle)||(picked.shape == rightMidPhalMiddle)||(picked.shape == rightDistalPhalMiddle)) {
+        bone = 23;
+      } else if ((picked.shape == rightProxPhalRing)||(picked.shape == rightMidPhalRing)||(picked.shape == rightDistalPhalRing)) {
+        bone = 24;
+      } else if ((picked.shape == rightProxPhalPinky)||(picked.shape == rightMidPhalPinky)||(picked.shape == rightDistalPhalPinky)) {
+        bone = 25;
+      } else if ((picked.shape == rightProxPhalThumb)||(picked.shape == rightMetacarpalThumb)||(picked.shape == rightDistalPhalThumb)) {
+        bone = 26;
       }
+        
     } else if (picked == null){
       mouseClicked = false;
     }
