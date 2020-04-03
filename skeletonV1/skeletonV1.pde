@@ -217,6 +217,82 @@ void setup() {
   leftEye.fill(eyes);
   rightEye =  new Ellipsoid(10, 10, 5);
   rightEye.fill(eyes);
+  
+  //define the left hand
+  //---------------------------------------
+  int leftHand = randomColor();
+  leftPalm = new Box(5, 25, 15);
+  leftPalm.fill(leftHand);
+  
+  //left Index
+  leftProxPhalIndex = new Box(5, 8, 3);
+  leftProxPhalIndex.fill(leftHand);
+  leftMidPhalIndex = new Box(5, 7, 3);
+  leftMidPhalIndex.fill(leftHand);
+  leftDistalPhalIndex = new Box(5, 6, 3);
+  leftDistalPhalIndex.fill(leftHand);
+  
+  //left Middle
+  leftProxPhalMiddle = new Box(5, 9, 3);
+  leftProxPhalMiddle.fill(leftHand);
+  leftMidPhalMiddle = new Box(5, 8, 3);
+  leftMidPhalMiddle.fill(leftHand);
+  leftDistalPhalMiddle = new Box(5, 7, 3);
+  leftDistalPhalMiddle.fill(leftHand);
+  
+  //left Ring
+  leftProxPhalRing = new Box(5, 8, 3);
+  leftProxPhalRing.fill(leftHand);
+  leftMidPhalRing = new Box(5, 7, 3);
+  leftMidPhalRing.fill(leftHand);
+  leftDistalPhalRing = new Box(5, 6, 3);
+  leftDistalPhalRing.fill(leftHand);
+  
+  //left Pinky
+  leftProxPhalPinky = new Box(5, 6, 3);
+  leftProxPhalPinky.fill(leftHand);
+  leftMidPhalPinky = new Box(5, 6, 3);
+  leftMidPhalPinky.fill(leftHand);
+  leftDistalPhalPinky = new Box(5, 5, 3);
+  leftDistalPhalPinky.fill(leftHand);
+  
+  //define the right hand
+  //---------------------------------------
+  int rightHand = randomColor();
+  rightPalm = new Box(5, 25, 15);
+  rightPalm.fill(rightHand);
+  
+  //right Index
+  rightProxPhalIndex = new Box(5, 8, 3);
+  rightProxPhalIndex.fill(rightHand);
+  rightMidPhalIndex = new Box(5, 7, 3);
+  rightMidPhalIndex.fill(rightHand);
+  rightDistalPhalIndex = new Box(5, 6, 3);
+  rightDistalPhalIndex.fill(rightHand);
+  
+  //right Middle
+  rightProxPhalMiddle = new Box(5, 9, 3);
+  rightProxPhalMiddle.fill(rightHand);
+  rightMidPhalMiddle = new Box(5, 8, 3);
+  rightMidPhalMiddle.fill(rightHand);
+  rightDistalPhalMiddle = new Box(5, 7, 3);
+  rightDistalPhalMiddle.fill(rightHand);
+  
+  //right Ring
+  rightProxPhalRing = new Box(5, 8, 3);
+  rightProxPhalRing.fill(rightHand);
+  rightMidPhalRing = new Box(5, 7, 3);
+  rightMidPhalRing.fill(rightHand);
+  rightDistalPhalRing = new Box(5, 6, 3);
+  rightDistalPhalRing.fill(rightHand);
+  
+  //right Pinky
+  rightProxPhalPinky = new Box(5, 6, 3);
+  rightProxPhalPinky.fill(rightHand);
+  rightMidPhalPinky = new Box(5, 6, 3);
+  rightMidPhalPinky.fill(rightHand);
+  rightDistalPhalPinky = new Box(5, 5, 3);
+  rightDistalPhalPinky.fill(rightHand);
 }
 
 
@@ -373,6 +449,54 @@ void draw() {
         rotateZ(moveUpLLA);
         translate(0, 40, 0); //moves the rotation point of the limb away from center
         leftLowArm.draw(getGraphics());
+        pushMatrix();
+          translate(0, 50, 0);
+          leftPalm.draw(getGraphics());
+          translate(0, 17, 6);
+          //Index Finger
+          pushMatrix();
+            leftProxPhalIndex.draw(getGraphics());
+            translate(0, 8, 0);
+            leftMidPhalIndex.draw(getGraphics());
+            translate(0, 7, 0);
+            leftDistalPhalIndex.draw(getGraphics());
+          popMatrix();
+          translate(0,0,-4);
+          //Middle Finger
+          pushMatrix();
+            leftProxPhalMiddle.draw(getGraphics());
+            translate(0, 9, 0);
+            leftMidPhalMiddle.draw(getGraphics());
+            translate(0, 8, 0);
+            leftDistalPhalMiddle.draw(getGraphics());
+          popMatrix();
+          translate(0,0,-4);
+          //Ring Finger
+          pushMatrix();
+            leftProxPhalRing.draw(getGraphics());
+            translate(0, 8, 0);
+            leftMidPhalRing.draw(getGraphics());
+            translate(0, 7, 0);
+            leftDistalPhalRing.draw(getGraphics());
+          popMatrix();
+          translate(0,0,-4);
+          //Pinky Finger
+          pushMatrix();
+            leftProxPhalPinky.draw(getGraphics());
+            translate(0, 6, 0);
+            leftMidPhalPinky.draw(getGraphics());
+            translate(0, 6, 0);
+            leftDistalPhalPinky.draw(getGraphics());
+          popMatrix();
+          ////Thumb
+          //pushMatrix();
+          //  leftProxPhalThumb.draw(getGraphics());
+          //  translate(0, 8, 0);
+          //  leftDistalPhalThumb.draw(getGraphics());
+          //  translate(0, 7, 0);
+          //  leftMetacarpalThumb.draw(getGraphics());
+          //popMatrix();
+        popMatrix();
       popMatrix();
     popMatrix();
     
@@ -391,6 +515,54 @@ void draw() {
         rotateZ(moveUpRLA);
         translate(0, 40, 0); //moves the rotation point of the limb away from center
         rightLowArm.draw(getGraphics());
+        pushMatrix();
+          translate(0, 50, 0);
+          leftPalm.draw(getGraphics());
+          translate(0, 17, -6);
+          //Index Finger
+          pushMatrix();
+            rightProxPhalIndex.draw(getGraphics());
+            translate(0, 8, 0);
+            rightMidPhalIndex.draw(getGraphics());
+            translate(0, 7, 0);
+            rightDistalPhalIndex.draw(getGraphics());
+          popMatrix();
+          translate(0,0,4);
+          //Middle Finger
+          pushMatrix();
+            rightProxPhalMiddle.draw(getGraphics());
+            translate(0, 9, 0);
+            rightMidPhalMiddle.draw(getGraphics());
+            translate(0, 8, 0);
+            rightDistalPhalMiddle.draw(getGraphics());
+          popMatrix();
+          translate(0,0,4);
+          //Ring Finger
+          pushMatrix();
+            rightProxPhalRing.draw(getGraphics());
+            translate(0, 8, 0);
+            rightMidPhalRing.draw(getGraphics());
+            translate(0, 7, 0);
+            rightDistalPhalRing.draw(getGraphics());
+          popMatrix();
+          translate(0,0,4);
+          //Pinky Finger
+          pushMatrix();
+            rightProxPhalPinky.draw(getGraphics());
+            translate(0, 6, 0);
+            rightMidPhalPinky.draw(getGraphics());
+            translate(0, 6, 0);
+            rightDistalPhalPinky.draw(getGraphics());
+          popMatrix();
+          ////Thumb
+          //pushMatrix();
+          //  rightProxPhalThumb.draw(getGraphics());
+          //  translate(0, 8, 0);
+          //  rightDistalPhalThumb.draw(getGraphics());
+          //  translate(0, 7, 0);
+          //  rightMetacarpalThumb.draw(getGraphics());
+          //popMatrix();
+        popMatrix();
       popMatrix();
     popMatrix();
   popMatrix();
