@@ -256,6 +256,14 @@ void setup() {
   leftDistalPhalPinky = new Box(5, 5, 3);
   leftDistalPhalPinky.fill(leftHand);
   
+  //left Thumb
+  leftProxPhalThumb = new Box (7, 10, 5);
+  leftProxPhalThumb.fill(leftHand);
+  leftDistalPhalThumb = new Box (7, 7, 5);
+  leftDistalPhalThumb.fill(leftHand);
+  leftMetacarpalThumb = new Box (7, 5, 5);
+  leftMetacarpalThumb.fill(leftHand);
+  
   //define the right hand
   //---------------------------------------
   int rightHand = randomColor();
@@ -293,6 +301,14 @@ void setup() {
   rightMidPhalPinky.fill(rightHand);
   rightDistalPhalPinky = new Box(5, 5, 3);
   rightDistalPhalPinky.fill(rightHand);
+  
+  //right Thumb
+  rightProxPhalThumb = new Box (7, 10, 5);
+  rightProxPhalThumb.fill(rightHand);
+  rightDistalPhalThumb = new Box (7, 7, 5);
+  rightDistalPhalThumb.fill(rightHand);
+  rightMetacarpalThumb = new Box (7, 5, 5);
+  rightMetacarpalThumb.fill(rightHand);
 }
 
 
@@ -300,7 +316,6 @@ void setup() {
 void draw() {
   background(0);
   keyPressedIsCheckedContinuusly();
-  
   
   
   
@@ -343,6 +358,7 @@ void draw() {
         bone = 14;
       } else if (picked.shape == leftPalm) {
         bone = 15;
+        println("leftPalm selected");
       } else if ((picked.shape == leftProxPhalIndex)||(picked.shape == leftMidPhalIndex)||(picked.shape == leftDistalPhalIndex)) {
         bone = 16;
       } else if ((picked.shape == leftProxPhalMiddle)||(picked.shape == leftMidPhalMiddle)||(picked.shape == leftDistalPhalMiddle)) {
@@ -450,52 +466,102 @@ void draw() {
         translate(0, 40, 0); //moves the rotation point of the limb away from center
         leftLowArm.draw(getGraphics());
         pushMatrix();
-          translate(0, 50, 0);
+          translate(0,40,0);
+          rotateZ(moveUpLWrist);
+          rotateX(moveLeftLWrist);
+          translate(0, 10, 0);
           leftPalm.draw(getGraphics());
-          translate(0, 17, 6);
+          translate(0, 10, 6);
+          
+          
           //Index Finger
           pushMatrix();
+            rotateZ(moveUpLIndex);
+            rotateX(moveLeftLIndex);
+            translate(0,7,0);
             leftProxPhalIndex.draw(getGraphics());
-            translate(0, 8, 0);
+            translate(0, 6, 0);
+            rotateZ(moveUpLIndex*1.5);
+            translate(0, 2, 0);
             leftMidPhalIndex.draw(getGraphics());
-            translate(0, 7, 0);
+            translate(0, 5, 0);
+            rotateZ(moveUpLIndex/1.5);
+            translate(0, 1, 0);
             leftDistalPhalIndex.draw(getGraphics());
           popMatrix();
           translate(0,0,-4);
+          
+          
           //Middle Finger
           pushMatrix();
+            rotateZ(moveUpLMiddle);
+            rotateX(moveLeftLMiddle);
+            translate(0,7,0);
             leftProxPhalMiddle.draw(getGraphics());
-            translate(0, 9, 0);
+            translate(0, 7, 0);
+            rotateZ(moveUpLMiddle*1.5);
+            translate(0, 2, 0);
             leftMidPhalMiddle.draw(getGraphics());
-            translate(0, 8, 0);
+            translate(0, 6, 0);
+            rotateZ(moveUpLMiddle/1.5);
+            translate(0, 1, 0);
             leftDistalPhalMiddle.draw(getGraphics());
           popMatrix();
           translate(0,0,-4);
+          
+          
           //Ring Finger
           pushMatrix();
+            rotateZ(moveUpLRing);
+            rotateX(moveLeftLRing);
+            translate(0,7,0);
             leftProxPhalRing.draw(getGraphics());
-            translate(0, 8, 0);
+            translate(0, 6, 0);
+            rotateZ(moveUpLRing*1.5);
+            translate(0, 2, 0);
             leftMidPhalRing.draw(getGraphics());
-            translate(0, 7, 0);
+            translate(0, 6, 0);
+            rotateZ(moveUpLRing/1.5);
+            translate(0, 1, 0);
             leftDistalPhalRing.draw(getGraphics());
           popMatrix();
           translate(0,0,-4);
+          
+          
           //Pinky Finger
           pushMatrix();
+            rotateZ(moveUpLPinky);
+            rotateX(moveLeftLPinky);
+            translate(0,7,0);
             leftProxPhalPinky.draw(getGraphics());
-            translate(0, 6, 0);
+            translate(0, 5, 0);
+            rotateZ(moveUpLPinky*1.5);
+            translate(0, 1, 0);
             leftMidPhalPinky.draw(getGraphics());
-            translate(0, 6, 0);
+            translate(0, 5, 0);
+            rotateZ(moveUpLRing/1.5);
+            translate(0, 1, 0);
             leftDistalPhalPinky.draw(getGraphics());
           popMatrix();
-          ////Thumb
-          //pushMatrix();
-          //  leftProxPhalThumb.draw(getGraphics());
-          //  translate(0, 8, 0);
-          //  leftDistalPhalThumb.draw(getGraphics());
-          //  translate(0, 7, 0);
-          //  leftMetacarpalThumb.draw(getGraphics());
-          //popMatrix();
+          
+          
+          //Thumb
+          pushMatrix();
+            translate(2,-12, 15);
+            rotateY(moveLeftLThumb);
+            translate(-2, 0, 0);
+            rotateZ(moveUpLThumb/3);
+            leftProxPhalThumb.draw(getGraphics());
+            translate(-2, 6, 0);
+            rotateZ(moveUpLThumb);
+            translate(0, 2, 0);
+            leftDistalPhalThumb.draw(getGraphics());
+            translate(0, 5, 0);
+            rotateZ(moveUpLThumb);
+            translate(0, 2, 0);
+            leftMetacarpalThumb.draw(getGraphics());
+          popMatrix();
+          
         popMatrix();
       popMatrix();
     popMatrix();
@@ -516,52 +582,94 @@ void draw() {
         translate(0, 40, 0); //moves the rotation point of the limb away from center
         rightLowArm.draw(getGraphics());
         pushMatrix();
-          translate(0, 50, 0);
-          leftPalm.draw(getGraphics());
-          translate(0, 17, -6);
+          translate(0, 40, 0);
+          rotateZ(moveUpRWrist);
+          rotateX(moveLeftRWrist);
+          translate(0, 10, 0);
+          rightPalm.draw(getGraphics());
+          translate(0, 10, -6);
+          
+          
           //Index Finger
           pushMatrix();
+            rotateZ(moveUpRIndex);
+            rotateX(moveLeftRIndex);
+            translate(0,7,0);
             rightProxPhalIndex.draw(getGraphics());
-            translate(0, 8, 0);
+            translate(0, 6, 0);
+            rotateZ(moveUpRIndex*1.5);
+            translate(0, 2, 0);
             rightMidPhalIndex.draw(getGraphics());
-            translate(0, 7, 0);
+            translate(0, 5, 0);
+            rotateZ(moveUpRIndex/1.5);
+            translate(0, 1, 0);
             rightDistalPhalIndex.draw(getGraphics());
           popMatrix();
           translate(0,0,4);
+          
+          
           //Middle Finger
           pushMatrix();
+            rotateZ(moveUpRMiddle);
+            rotateX(moveLeftRMiddle);
+            translate(0,7,0);
             rightProxPhalMiddle.draw(getGraphics());
-            translate(0, 9, 0);
+            translate(0, 7, 0);
+            rotateZ(moveUpRMiddle*1.5);
+            translate(0, 2, 0);
             rightMidPhalMiddle.draw(getGraphics());
-            translate(0, 8, 0);
+            translate(0, 6, 0);
+            rotateZ(moveUpRMiddle/1.5);
+            translate(0, 1, 0);
             rightDistalPhalMiddle.draw(getGraphics());
           popMatrix();
           translate(0,0,4);
+          
+          
           //Ring Finger
           pushMatrix();
+            rotateZ(moveUpRRing);
+            rotateX(moveLeftRRing);
+            translate(0,7,0);
             rightProxPhalRing.draw(getGraphics());
-            translate(0, 8, 0);
+            translate(0, 6, 0);
+            rotateZ(moveUpRRing*1.5);
+            translate(0, 2, 0);
             rightMidPhalRing.draw(getGraphics());
-            translate(0, 7, 0);
+            translate(0, 6, 0);
+            rotateZ(moveUpRRing/1.5);
+            translate(0, 1, 0);
             rightDistalPhalRing.draw(getGraphics());
           popMatrix();
           translate(0,0,4);
+          
+          
           //Pinky Finger
           pushMatrix();
+            rotateZ(moveUpRPinky);
+            rotateX(moveLeftRPinky);
+            translate(0,7,0);
             rightProxPhalPinky.draw(getGraphics());
-            translate(0, 6, 0);
+            translate(0, 5, 0);
+            rotateZ(moveUpRPinky*1.5);
+            translate(0, 1, 0);
             rightMidPhalPinky.draw(getGraphics());
-            translate(0, 6, 0);
+            translate(0, 5, 0);
+            rotateZ(moveUpRRing/1.5);
+            translate(0, 1, 0);
             rightDistalPhalPinky.draw(getGraphics());
           popMatrix();
-          ////Thumb
-          //pushMatrix();
-          //  rightProxPhalThumb.draw(getGraphics());
-          //  translate(0, 8, 0);
-          //  rightDistalPhalThumb.draw(getGraphics());
-          //  translate(0, 7, 0);
-          //  rightMetacarpalThumb.draw(getGraphics());
-          //popMatrix();
+          
+          
+          //Thumb
+          pushMatrix();
+            translate(0,-12,-15);
+            rightProxPhalThumb.draw(getGraphics());
+            translate(0, 8, 0);
+            rightDistalPhalThumb.draw(getGraphics());
+            translate(0, 7, 0);
+            rightMetacarpalThumb.draw(getGraphics());
+          popMatrix();
         popMatrix();
       popMatrix();
     popMatrix();
@@ -751,6 +859,81 @@ void keyPressedIsCheckedContinuusly() {
         }
       }
       
+    //fingers--------------------------------------------------------
+     else if (bone == 15){
+        if (moveLeftLWrist < 0.15){
+          moveLeftLWrist += 0.01;
+          println(moveLeftLWrist);
+        }
+      }
+      else if (bone == 16){
+        if (moveLeftLIndex < 0.05){
+          moveLeftLIndex += 0.01;
+          println(moveLeftLIndex);
+        }
+      }
+      else if (bone == 17){
+        if (moveLeftLMiddle < 0.05){
+          moveLeftLMiddle += 0.01;
+          println(moveLeftLMiddle);
+        }
+      }
+      else if (bone == 18){
+        if (moveLeftLRing < 0.05){
+          moveLeftLRing += 0.01;
+          println(moveLeftLRing);
+        }
+      }
+      else if (bone == 19){
+        if (moveLeftLPinky < 0.05){
+          moveLeftLPinky += 0.01;
+          println(moveLeftLPinky);
+        }
+      }
+      else if (bone == 20){
+        if (moveLeftLThumb < 1.6){
+          moveLeftLThumb += 0.01;
+          println(moveLeftLThumb);
+        }
+      }
+      
+      else if (bone == 21){
+        if (moveLeftRWrist < 0.79){
+          moveLeftRWrist += 0.01;
+          println(moveLeftRWrist);
+        }
+      }
+      else if (bone == 22){
+        if (moveLeftRIndex < 0.14){
+          moveLeftRIndex += 0.01;
+          println(moveLeftRIndex);
+        }
+      }
+      else if (bone == 23){
+        if (moveLeftRMiddle < 0.18){
+          moveLeftRMiddle += 0.01;
+          println(moveLeftRMiddle);
+        }
+      }
+      else if (bone == 24){
+        if (moveLeftRRing < 0.25){
+          moveLeftRRing += 0.01;
+          println(moveLeftRRing);
+        }
+      }
+      else if (bone == 25){
+        if (moveLeftRPinky < 0.53){
+          moveLeftRPinky += 0.01;
+          println(moveLeftRPinky);
+        }
+      }
+      else if (bone == 26){
+        if (moveLeftRThumb < 0.1){
+          moveLeftRThumb += 0.01;
+          println(moveLeftRThumb);
+        }
+      }
+      
     //------------------------------------------------------------------
     //Moves Joints Right
     //------------------------------------------------------------------
@@ -852,6 +1035,80 @@ void keyPressedIsCheckedContinuusly() {
         }
       }
 
+    //fingers--------------------------------------------------------
+      else if (bone == 15){
+        if (moveLeftLWrist > -0.79){
+          moveLeftLWrist -= 0.01;
+          println(moveLeftLWrist);
+        }
+      }
+      else if (bone == 16){
+        if (moveLeftLIndex > -0.14){
+          moveLeftLIndex -= 0.01;
+          println(moveLeftLIndex);
+        }
+      }
+      else if (bone == 17){
+        if (moveLeftLMiddle > -0.18){
+          moveLeftLMiddle -= 0.01;
+          println(moveLeftLMiddle);
+        }
+      }
+      else if (bone == 18){
+        if (moveLeftLRing > -0.25){
+          moveLeftLRing -= 0.01;
+          println(moveLeftLRing);
+        }
+      }
+      else if (bone == 19){
+        if (moveLeftLPinky > -0.53){
+          moveLeftLPinky -= 0.01;
+          println(moveLeftLPinky);
+        }
+      }
+      else if (bone == 20){
+        if (moveLeftLThumb > -0.1){
+          moveLeftLThumb -= 0.01;
+          println(moveLeftLThumb);
+        }
+      }
+      
+      else if (bone == 21){
+        if (moveLeftRWrist > -0.15){
+          moveLeftRWrist -= 0.01;
+          println(moveLeftRWrist);
+        }
+      }
+      else if (bone == 22){
+        if (moveLeftRIndex > -0.05){
+          moveLeftRIndex -= 0.01;
+          println(moveLeftRIndex);
+        }
+      }
+      else if (bone == 23){
+        if (moveLeftRMiddle > -0.05){
+          moveLeftRMiddle -= 0.01;
+          println(moveLeftRMiddle);
+        }
+      }
+      else if (bone == 24){
+        if (moveLeftRRing > -0.05){
+          moveLeftRRing -= 0.01;
+          println(moveLeftRRing);
+        }
+      }
+      else if (bone == 25){
+        if (moveLeftRPinky > -0.05){
+          moveLeftRPinky -= 0.01;
+          println(moveLeftRPinky);
+        }
+      }
+      else if (bone == 26){
+        if (moveLeftRThumb > -1.6){
+          moveLeftRThumb -= 0.01;
+          println(moveLeftRThumb);
+        }
+      }
       
     //------------------------------------------------------------------
     //Moves Joints Up
@@ -931,7 +1188,80 @@ void keyPressedIsCheckedContinuusly() {
           println(moveUpRF);
         }
       }
-
+      //fingers--------------------------------------------------------
+      else if (bone == 15){
+        if (moveUpLWrist > -1.3){
+          moveUpLWrist -= 0.01;
+          println("moving wrist");
+        }
+      }
+      else if (bone == 16){
+        if (moveUpLIndex > -1.57){
+          moveUpLIndex -= 0.01;
+          println(moveUpLIndex);
+        }
+      }
+      else if (bone == 17){
+        if (moveUpLMiddle > -1.57){
+          moveUpLMiddle -= 0.01;
+          println(moveUpLMiddle);
+        }
+      }
+      else if (bone == 18){
+        if (moveUpLRing > -1.57){
+          moveUpLRing -= 0.01;
+          println(moveUpLRing);
+        }
+      }
+      else if (bone == 19){
+        if (moveUpLPinky > -1.57){
+          moveUpLPinky -= 0.01;
+          println(moveUpLPinky);
+        }
+      }
+      else if (bone == 20){
+        if (moveUpLThumb > -0.53){
+          moveUpLThumb -= 0.01;
+          println(moveUpLThumb);
+        }
+      }
+      
+      else if (bone == 21){
+        if (moveUpRWrist > -1.3){
+          moveUpRWrist -= 0.01;
+          println("moving wrist");
+        }
+      }
+      else if (bone == 22){
+        if (moveUpRIndex > -1.57){
+          moveUpRIndex -= 0.01;
+          println(moveUpRIndex);
+        }
+      }
+      else if (bone == 23){
+        if (moveUpRMiddle > -1.57){
+          moveUpRMiddle -= 0.01;
+          println(moveUpRMiddle);
+        }
+      }
+      else if (bone == 24){
+        if (moveUpRRing > -1.57){
+          moveUpRRing -= 0.01;
+          println(moveUpRRing);
+        }
+      }
+      else if (bone == 25){
+        if (moveUpRPinky > -1.57){
+          moveUpRPinky -= 0.01;
+          println(moveUpRPinky);
+        }
+      }
+      else if (bone == 26){
+        if (moveUpRThumb > -0.53){
+          moveUpRThumb -= 0.01;
+          println(moveUpRThumb);
+        }
+      }
 
       
     //------------------------------------------------------------------
@@ -1011,6 +1341,84 @@ void keyPressedIsCheckedContinuusly() {
           println(moveUpRF);
         }
       }
+      
+      //fingers--------------------------------------------------------
+      else if (bone == 15){
+        if (moveUpLWrist < 1.4){
+          moveUpLWrist += 0.01;
+          println(moveUpLWrist);
+        }
+      }
+      else if (bone == 16){
+        if (moveUpLIndex < 0.05){
+          moveUpLIndex += 0.01;
+          println(moveUpLIndex);
+        }
+      }
+      else if (bone == 17){
+        if (moveUpLMiddle < 0.05){
+          moveUpLMiddle += 0.01;
+          println(moveUpLMiddle);
+        }
+      }
+      else if (bone == 18){
+        if (moveUpLRing < 0.05){
+          moveUpLRing += 0.01;
+          println(moveUpLRing);
+        }
+      }
+      else if (bone == 19){
+        if (moveUpLPinky < 0.05){
+          moveUpLPinky += 0.01;
+          println(moveUpLPinky);
+        }
+      }
+      else if (bone == 20){
+        if (moveUpLThumb < 0.53){
+          moveUpLThumb += 0.01;
+          println(moveUpLThumb);
+        }
+      }
+      
+      else if (bone == 21){
+        if (moveUpRWrist < 1.4){
+          moveUpRWrist += 0.01;
+          println(moveUpRWrist);
+        }
+      }
+      else if (bone == 22){
+        if (moveUpRIndex < 0.05){
+          moveUpRIndex += 0.01;
+          println(moveUpRIndex);
+        }
+      }
+      else if (bone == 23){
+        if (moveUpRMiddle < 0.05){
+          moveUpRMiddle += 0.01;
+          println(moveUpRMiddle);
+        }
+      }
+      else if (bone == 24){
+        if (moveUpRRing < 0.05){
+          moveUpRRing += 0.01;
+          println(moveUpRRing);
+        }
+      }
+      else if (bone == 25){
+        if (moveUpRPinky < 0.05){
+          moveUpRPinky += 0.01;
+          println(moveUpRPinky);
+        }
+      }
+      else if (bone == 26){
+        if (moveUpRThumb < 0.53){
+          moveUpRThumb += 0.01;
+          println(moveUpRThumb);
+        }
+      }
+
+  
+//NOTE TO SELF, THIS BRACKET CLOSES THE KEYPICKER FUNCTION
     }
   }
   
