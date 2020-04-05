@@ -164,7 +164,7 @@ Picked picked = null;
 
 //set up function defines the defaults of the shapes/canvas
 void setup() {
-  size(1280, 720, P3D);
+  fullScreen(P3D);
   noFill();
   
   spine = new Box(10, 200, 10);
@@ -257,11 +257,11 @@ void setup() {
   leftDistalPhalPinky.fill(leftHand);
   
   //left Thumb
-  leftProxPhalThumb = new Box (7, 10, 5);
+  leftProxPhalThumb = new Box (6, 10, 5);
   leftProxPhalThumb.fill(leftHand);
-  leftDistalPhalThumb = new Box (7, 7, 5);
+  leftDistalPhalThumb = new Box (6, 7, 5);
   leftDistalPhalThumb.fill(leftHand);
-  leftMetacarpalThumb = new Box (7, 5, 5);
+  leftMetacarpalThumb = new Box (6, 5, 5);
   leftMetacarpalThumb.fill(leftHand);
   
   //define the right hand
@@ -303,11 +303,11 @@ void setup() {
   rightDistalPhalPinky.fill(rightHand);
   
   //right Thumb
-  rightProxPhalThumb = new Box (7, 10, 5);
+  rightProxPhalThumb = new Box (6, 10, 5);
   rightProxPhalThumb.fill(rightHand);
-  rightDistalPhalThumb = new Box (7, 7, 5);
+  rightDistalPhalThumb = new Box (6, 7, 5);
   rightDistalPhalThumb.fill(rightHand);
-  rightMetacarpalThumb = new Box (7, 5, 5);
+  rightMetacarpalThumb = new Box (6, 5, 5);
   rightMetacarpalThumb.fill(rightHand);
 }
 
@@ -548,11 +548,12 @@ void draw() {
           //Thumb
           pushMatrix();
             translate(2,-12, 15);
+            translate(moveLeftLThumb, 0, 0);
             rotateY(moveLeftLThumb);
-            translate(-2, 0, 0);
+            translate(-moveLeftLThumb, 0, 0);
             rotateZ(moveUpLThumb/3);
             leftProxPhalThumb.draw(getGraphics());
-            translate(-2, 6, 0);
+            translate(0, 6, 0);
             rotateZ(moveUpLThumb);
             translate(0, 2, 0);
             leftDistalPhalThumb.draw(getGraphics());
@@ -663,13 +664,22 @@ void draw() {
           
           //Thumb
           pushMatrix();
-            translate(0,-12,-15);
+            translate(2,-10, -15);
+            translate(-moveLeftRThumb, 0, 0);
+            rotateY(moveLeftRThumb);
+            translate(moveLeftRThumb, 0, 0);
+            rotateZ(moveUpRThumb/3);
             rightProxPhalThumb.draw(getGraphics());
-            translate(0, 8, 0);
+            translate(0, 6, 0);
+            rotateZ(moveUpRThumb);
+            translate(0, 2, 0);
             rightDistalPhalThumb.draw(getGraphics());
-            translate(0, 7, 0);
+            translate(0, 5, 0);
+            rotateZ(moveUpRThumb);
+            translate(0, 2, 0);
             rightMetacarpalThumb.draw(getGraphics());
           popMatrix();
+          
         popMatrix();
       popMatrix();
     popMatrix();
@@ -891,8 +901,8 @@ void keyPressedIsCheckedContinuusly() {
         }
       }
       else if (bone == 20){
-        if (moveLeftLThumb < 1.6){
-          moveLeftLThumb += 0.01;
+        if (moveLeftLThumb > -0.1){
+          moveLeftLThumb -= 0.01;
           println(moveLeftLThumb);
         }
       }
@@ -928,8 +938,8 @@ void keyPressedIsCheckedContinuusly() {
         }
       }
       else if (bone == 26){
-        if (moveLeftRThumb < 0.1){
-          moveLeftRThumb += 0.01;
+        if (moveLeftRThumb > -2){
+          moveLeftRThumb -= 0.01;
           println(moveLeftRThumb);
         }
       }
@@ -1066,9 +1076,10 @@ void keyPressedIsCheckedContinuusly() {
           println(moveLeftLPinky);
         }
       }
+
       else if (bone == 20){
-        if (moveLeftLThumb > -0.1){
-          moveLeftLThumb -= 0.01;
+        if (moveLeftLThumb < 2){
+          moveLeftLThumb += 0.01;
           println(moveLeftLThumb);
         }
       }
@@ -1104,8 +1115,8 @@ void keyPressedIsCheckedContinuusly() {
         }
       }
       else if (bone == 26){
-        if (moveLeftRThumb > -1.6){
-          moveLeftRThumb -= 0.01;
+        if (moveLeftRThumb < 0.1){
+          moveLeftRThumb += 0.01;
           println(moveLeftRThumb);
         }
       }
@@ -1220,7 +1231,7 @@ void keyPressedIsCheckedContinuusly() {
         }
       }
       else if (bone == 20){
-        if (moveUpLThumb > -0.53){
+        if (moveUpLThumb > -0.80){
           moveUpLThumb -= 0.01;
           println(moveUpLThumb);
         }
@@ -1257,7 +1268,7 @@ void keyPressedIsCheckedContinuusly() {
         }
       }
       else if (bone == 26){
-        if (moveUpRThumb > -0.53){
+        if (moveUpRThumb > -0.80){
           moveUpRThumb -= 0.01;
           println(moveUpRThumb);
         }
