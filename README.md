@@ -8,7 +8,7 @@ A number of test projects for the purpose of learning 3D modeling in Processing
 #### To Do:
 - [x] Find an example of motion data
   - [x] Check out accosiated skeleton
-  - [ ] Make a comparable skeleton that works with motion data
+  - [ ] Make a comparable skeleton ~~that works with motion data~~
 - [ ] Continue refining the skeleton using the motion data
   - [ ] Start work on hands and feet
 
