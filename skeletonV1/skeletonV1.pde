@@ -1430,6 +1430,34 @@ void keyPressedIsCheckedContinuusly() {
 
   
 //NOTE TO SELF, THIS BRACKET CLOSES THE KEYPICKER FUNCTION
+    }else if (key == BACKSPACE){
+      if (bone == 15){        //bone 15 is left palm
+        moveUpLIndex += 0.01; 
+        moveUpLMiddle += 0.01;
+        moveUpLRing += 0.01;
+        moveUpLPinky += 0.01;
+        moveUpLThumb += 0.01;
+      } else if (bone == 21){ //bone 21 is right palm
+        moveUpRIndex += 0.01; 
+        moveUpRMiddle += 0.01;
+        moveUpRRing += 0.01;
+        moveUpRPinky += 0.01;
+        moveUpRThumb += 0.01;
+      }
+    }else if (key == ENTER){
+      if (bone == 15){       //bone 15 is left palm
+        moveUpLIndex -= 0.01; 
+        moveUpLMiddle -= 0.01;
+        moveUpLRing -= 0.01;
+        moveUpLPinky -= 0.01;
+        moveUpLThumb -= 0.01;
+      } else if (bone == 21){ //bone 21 is right palm
+        moveUpRIndex -= 0.01; 
+        moveUpRMiddle -= 0.01;
+        moveUpRRing -= 0.01;
+        moveUpRPinky -= 0.01;
+        moveUpRThumb -= 0.01;
+      }
     }
   }
   
