@@ -320,7 +320,7 @@ void draw() {
   
   
   pushMatrix();
-  translate(width/2, height/2+200, -200);
+  translate(width/2, height/2+150, 100);
 
  //=======================================================================
  //SHAPE PICKER FUNCTIONS (from Shapes3D Library)
@@ -1432,31 +1432,71 @@ void keyPressedIsCheckedContinuusly() {
 //NOTE TO SELF, THIS BRACKET CLOSES THE KEYPICKER FUNCTION
     }else if (key == BACKSPACE){
       if (bone == 15){        //bone 15 is left palm
-        moveUpLIndex += 0.01; 
-        moveUpLMiddle += 0.01;
-        moveUpLRing += 0.01;
-        moveUpLPinky += 0.01;
-        moveUpLThumb += 0.01;
+        if (moveUpLIndex < 0.05){
+          moveUpLIndex += 0.01;
+        }
+        if (moveUpLMiddle < 0.05){
+          moveUpLMiddle += 0.01;
+        }
+        if (moveUpLRing < 0.05){
+          moveUpLRing += 0.01;
+        }
+        if (moveUpLPinky < 0.05){
+          moveUpLPinky += 0.01;
+        }
+        if (moveUpLThumb < 0.05){
+          moveUpLThumb += 0.01;
+        }
       } else if (bone == 21){ //bone 21 is right palm
-        moveUpRIndex += 0.01; 
-        moveUpRMiddle += 0.01;
-        moveUpRRing += 0.01;
-        moveUpRPinky += 0.01;
-        moveUpRThumb += 0.01;
+        if (moveUpRIndex < 0.05){
+          moveUpRIndex += 0.01;
+        }
+        if (moveUpRMiddle < 0.05){
+          moveUpRMiddle += 0.01;
+        }
+        if (moveUpRRing < 0.05){
+          moveUpRRing += 0.01;
+        }
+        if (moveUpRPinky < 0.05){
+          moveUpRPinky += 0.01;
+        }
+        if (moveUpRThumb < 0.05){
+          moveUpRThumb += 0.01;
+        }
       }
     }else if (key == ENTER){
       if (bone == 15){       //bone 15 is left palm
-        moveUpLIndex -= 0.01; 
-        moveUpLMiddle -= 0.01;
-        moveUpLRing -= 0.01;
-        moveUpLPinky -= 0.01;
-        moveUpLThumb -= 0.01;
+        if (moveUpLIndex > -1.57){
+          moveUpLIndex -= 0.01;
+        }
+        if (moveUpLRing > -1.57){
+          moveUpLRing -= 0.01;
+        }
+        if (moveUpLMiddle > -1.57){
+          moveUpLMiddle -= 0.01;
+        }
+        if (moveUpLPinky > -1.57){
+          moveUpLPinky -= 0.01;
+        }
+        if (moveUpLThumb > -0.80){
+          moveUpLThumb -= 0.01;
+        }
       } else if (bone == 21){ //bone 21 is right palm
-        moveUpRIndex -= 0.01; 
-        moveUpRMiddle -= 0.01;
-        moveUpRRing -= 0.01;
-        moveUpRPinky -= 0.01;
-        moveUpRThumb -= 0.01;
+        if (moveUpRIndex > -1.57){
+          moveUpRIndex -= 0.01;
+        }
+        if (moveUpRMiddle > -1.57){
+          moveUpRMiddle -= 0.01;
+        }
+        if (moveUpRRing > -1.57){
+          moveUpRRing -= 0.01;
+        }
+        if (moveUpRPinky > -1.57){
+          moveUpRPinky -= 0.01;
+        }
+        if (moveUpRThumb > -0.80){
+          moveUpRThumb -= 0.01;
+        }
       }
     }
   }
