@@ -88,6 +88,13 @@ boolean mouseClicked = false;
 
 int bone = 1;
 
+float cameraWidth = 0.0;
+float cameraDepth = 100;
+float cameraHeight = 150;
+
+float rotCamX = 0.0;
+float rotCamY = 0.0;
+
 //declaire skeleton shapes
 Box spine;
 Box shoulders;
@@ -320,8 +327,11 @@ void draw() {
   
   
   pushMatrix();
-  translate(width/2, height/2+150, 100);
-
+  
+  translate(width/2 + cameraWidth, height/2+cameraHeight, cameraDepth);
+  rotateX(rotCamX);
+  rotateY(rotCamY);
+  
  //=======================================================================
  //SHAPE PICKER FUNCTIONS (from Shapes3D Library)
  //=======================================================================
@@ -734,7 +744,7 @@ void draw() {
   popMatrix();
   
   popMatrix();
-  
+  println(bone);
 } 
 
 
@@ -753,6 +763,8 @@ void keyPressedIsCheckedContinuusly() {
           turnHead -= 0.01;
           println("headtilt: " + turnHead);
         }
+      } else if ((bone == 0)||(bone == 50)){
+        cameraDepth += 1;
       }
 
       
@@ -765,6 +777,8 @@ void keyPressedIsCheckedContinuusly() {
           turnHead += 0.01;
           println("headtilt: " + turnHead);
         }
+      } else if ((bone == 0)||(bone == 50)){
+        cameraDepth -= 1;
       }
 
         
@@ -944,6 +958,10 @@ void keyPressedIsCheckedContinuusly() {
         }
       }
       
+      else if ((bone == 0)||(bone == 50)){
+        cameraWidth += 1;
+      }
+      
     //------------------------------------------------------------------
     //Moves Joints Right
     //------------------------------------------------------------------
@@ -1119,6 +1137,8 @@ void keyPressedIsCheckedContinuusly() {
           moveLeftRThumb += 0.01;
           println(moveLeftRThumb);
         }
+      } else if ((bone == 0)||(bone == 50)){
+        cameraWidth -= 1;
       }
       
     //------------------------------------------------------------------
@@ -1272,6 +1292,8 @@ void keyPressedIsCheckedContinuusly() {
           moveUpRThumb -= 0.01;
           println(moveUpRThumb);
         }
+      } else if ((bone == 0)||(bone == 50)){
+        cameraHeight += 1;
       }
 
       
@@ -1351,7 +1373,7 @@ void keyPressedIsCheckedContinuusly() {
           moveUpRF += 0.01;
           println(moveUpRF);
         }
-      }
+      } 
       
       //fingers--------------------------------------------------------
       else if (bone == 15){
@@ -1427,6 +1449,9 @@ void keyPressedIsCheckedContinuusly() {
           println(moveUpRThumb);
         }
       }
+      else if ((bone == 0)||(bone == 50)){
+        cameraHeight -= 1;
+      }
 
   
 //NOTE TO SELF, THIS BRACKET CLOSES THE KEYPICKER FUNCTION
@@ -1497,6 +1522,23 @@ void keyPressedIsCheckedContinuusly() {
         if (moveUpRThumb > -0.80){
           moveUpRThumb -= 0.01;
         }
+      }
+    } else if ((key == 'c')||(key == 'C')){
+      if (bone == 0){
+        bone = 50;
+      } else bone = 0;
+      
+    } else if ((key == 'z')||(key == 'Z')){
+      if (bone == 0){
+        rotCamY += 0.01;
+      } else if (bone == 50){
+        rotCamY -= 0.01;
+      }
+    } else if ((key == 'x')||(key == 'X')){
+      if (bone == 0){
+        rotCamX += 0.01;
+      } else if (bone == 50){
+        rotCamX -= 0.01;
       }
     }
   }
