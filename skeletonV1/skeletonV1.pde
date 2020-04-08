@@ -77,6 +77,9 @@ float turnRUL = 0.0;
 float turnRLL = 0.0;
 float rotHips = 0.0;
 
+float turnLeftPalm = 1.57;
+float turnRightPalm = -1.57;
+
 float up = 0.0;
 float turn = 0.0;
 
@@ -329,8 +332,7 @@ void draw() {
   pushMatrix();
   
   translate(width/2 + cameraWidth, height/2+cameraHeight, cameraDepth);
-  rotateX(rotCamX);
-  rotateY(rotCamY);
+  
   
  //=======================================================================
  //SHAPE PICKER FUNCTIONS (from Shapes3D Library)
@@ -368,7 +370,6 @@ void draw() {
         bone = 14;
       } else if (picked.shape == leftPalm) {
         bone = 15;
-        println("leftPalm selected");
       } else if ((picked.shape == leftProxPhalIndex)||(picked.shape == leftMidPhalIndex)||(picked.shape == leftDistalPhalIndex)) {
         bone = 16;
       } else if ((picked.shape == leftProxPhalMiddle)||(picked.shape == leftMidPhalMiddle)||(picked.shape == leftDistalPhalMiddle)) {
@@ -403,9 +404,13 @@ void draw() {
  //ANIMATION MATRICIES
  //=======================================================================
   //affects the entire skeleton as is is before any object is drawn
-  translate(sideways, 0, forward);
-  translate(0, -200, 0);
   
+  
+  translate(sideways, 0, forward);
+  translate(0, -100, 0);
+  rotateX(rotCamX);
+  rotateY(rotCamY);
+  translate(0, -100, 0);
   //full body rotation
   rotateY(moveLeftSpine);
   
@@ -473,6 +478,7 @@ void draw() {
         translate(0, 50, 0);
         rotateY(turnLLA);
         rotateZ(moveUpLLA);
+        rotateY(turnLeftPalm);
         translate(0, 40, 0); //moves the rotation point of the limb away from center
         leftLowArm.draw(getGraphics());
         pushMatrix();
@@ -590,6 +596,7 @@ void draw() {
         translate(0, 50, 0);
         rotateY(turnRLA);
         rotateZ(moveUpRLA);
+        rotateY(turnRightPalm);
         translate(0, 40, 0); //moves the rotation point of the limb away from center
         rightLowArm.draw(getGraphics());
         pushMatrix();
@@ -765,8 +772,15 @@ void keyPressedIsCheckedContinuusly() {
         }
       } else if ((bone == 0)||(bone == 50)){
         cameraDepth += 1;
+      } else if (bone == 15) {
+        if (turnLeftPalm > -0.01){
+          turnLeftPalm -= 0.01;
+        }
+      } else if (bone == 21) {
+        if (turnRightPalm > -3.14){
+          turnRightPalm -= 0.01;
+        }
       }
-
       
     } else if ((key == 'e')||(key == 'E')){
       if (bone == 1){ //bone 1 is spine
@@ -779,6 +793,14 @@ void keyPressedIsCheckedContinuusly() {
         }
       } else if ((bone == 0)||(bone == 50)){
         cameraDepth -= 1;
+      } else if (bone == 15) {
+        if (turnLeftPalm < 3.14){
+          turnLeftPalm += 0.01;
+        }
+      } else if (bone == 21) {
+        if (turnRightPalm < 0.01){
+          turnRightPalm += 0.01;
+        }
       }
 
         
@@ -1135,7 +1157,6 @@ void keyPressedIsCheckedContinuusly() {
       else if (bone == 26){
         if (moveLeftRThumb < 0.1){
           moveLeftRThumb += 0.01;
-          println(moveLeftRThumb);
         }
       } else if ((bone == 0)||(bone == 50)){
         cameraWidth -= 1;
@@ -1470,7 +1491,10 @@ void keyPressedIsCheckedContinuusly() {
           moveUpLPinky += 0.01;
         }
         if (moveUpLThumb < 0.05){
-          moveUpLThumb += 0.01;
+          moveUpLThumb += 0.015;
+        }
+        if (moveLeftLThumb > -0.1){
+          moveLeftLThumb -= 0.01;
         }
       } else if (bone == 21){ //bone 21 is right palm
         if (moveUpRIndex < 0.05){
@@ -1486,7 +1510,10 @@ void keyPressedIsCheckedContinuusly() {
           moveUpRPinky += 0.01;
         }
         if (moveUpRThumb < 0.05){
-          moveUpRThumb += 0.01;
+          moveUpRThumb += 0.015;
+        }
+        if (moveLeftRThumb < 0.1){
+          moveLeftRThumb += 0.01;
         }
       }
     }else if (key == ENTER){
@@ -1504,7 +1531,10 @@ void keyPressedIsCheckedContinuusly() {
           moveUpLPinky -= 0.01;
         }
         if (moveUpLThumb > -0.80){
-          moveUpLThumb -= 0.01;
+          moveUpLThumb -= 0.02;
+        }
+        if (moveLeftLThumb < 2){
+          moveLeftLThumb += 0.01;
         }
       } else if (bone == 21){ //bone 21 is right palm
         if (moveUpRIndex > -1.57){
@@ -1520,8 +1550,12 @@ void keyPressedIsCheckedContinuusly() {
           moveUpRPinky -= 0.01;
         }
         if (moveUpRThumb > -0.80){
-          moveUpRThumb -= 0.01;
+          moveUpRThumb -= 0.015;
         }
+        if (moveLeftRThumb > -2){
+          moveLeftRThumb -= 0.01;
+        }
+        
       }
     } else if ((key == 'c')||(key == 'C')){
       if (bone == 0){
