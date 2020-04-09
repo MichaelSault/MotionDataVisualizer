@@ -98,6 +98,8 @@ float cameraHeight = 150;
 float rotCamX = 0.0;
 float rotCamY = 0.0;
 
+final float floorLevel = 500.0;
+
 //declaire skeleton shapes
 Box spine;
 Box shoulders;
@@ -325,12 +327,13 @@ void setup() {
 //draws the shapes and applies the transformations/translations
 void draw() {
   background(0);
+  
   keyPressedIsCheckedContinuusly();
   
   
   
   pushMatrix();
-  
+
   translate(width/2 + cameraWidth, height/2+cameraHeight, cameraDepth);
   
   
