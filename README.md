@@ -1,6 +1,59 @@
 # Processing3DTests
 A number of test projects for the purpose of learning 3D modeling in Processing
 
+----
+
+### April 16, 2020
+#### To Do:
+- [ ] Examine and learn how to parse data from a .bvh mo cap data file
+- [ ] Alter the existing skeleton to animate with an applicable .bvh file
+- [ ] Write a final report and powerpoint
+- [ ] Create a demo video
+
+#### Completed:
+- [x] Working with the Kinetic Library
+- [x] Research Hierarchical Modeling concepts
+- [x] Learned the basics
+- [x] Drawing in 2D
+- [x] Drawing in 3D
+- [x] Using 3D Libraries
+  - Kinetic Library (EWBIK)
+  - damkjer.ocd
+  - peasyCam
+- [x] Importing models (.OBJ)
+- [x] Moving/dragging individual objects
+- [x] Research Hierarchical Modeling concepts
+  - https://web.cs.wpi.edu/~emmanuel/courses/cs543/f13/slides/lecture05_p3.pdf
+- [x] Re-make the Motion and Interaction examples from Processing.org in 3D
+  - [x] Interaction
+    - [x] Follow1
+    - [x] Follow3
+    - [x] Reach
+  - [x] Motion
+    - [x] Bounce
+    - [ ] ~~Moving On Curves~~
+    - [x] Brownian
+    - [x] Circle Collision
+    - [ ] ~~Reflection~~
+- [x] Make a hierarchical model with several lengths of limbs
+  - see armExample
+- [x] Set min and max join angle limits
+  - see armExample
+- [x] Adding constraints to the movement(similar to reach2) and the angles(on the joins)
+  - see armExample
+- [x] Check physical simulation of external forces (gravity, etc)
+  - see BounceGravity
+- [x] Check physical simulation of internal forces
+- [x] Implement Various Joints
+  - [x] Ball/Socket Joints
+  - [x] Hinge Joint
+  - [x] Scapular Joint
+- [x] Build a human outline/skeleton that implenets the above joints
+- [x] Find an example of motion data
+  - [x] Check out accosiated skeleton
+  - [x] Make a comparable skeleton ~~that works with motion data~~
+- [x] Continue refining the skeleton using the motion data
+  - [x] Start work on hands and feet
 
 ----
 
@@ -8,7 +61,7 @@ A number of test projects for the purpose of learning 3D modeling in Processing
 #### To Do:
 - [x] Find an example of motion data
   - [x] Check out accosiated skeleton
-  - [ ] Make a comparable skeleton ~~that works with motion data~~
+  - [x] Make a comparable skeleton ~~that works with motion data~~
 - [ ] Continue refining the skeleton using the motion data
   - [ ] Start work on hands and feet
 
