@@ -87,11 +87,6 @@ float headZ = 0.0;
 //frame counter
 int frame = 0;
 
-
-//legacy picker vars
-int bone = 1;
-boolean mouseClicked = false;
-
 //camera vars
 float cameraWidth = -1000.0;
 float cameraDepth = -700.0;
@@ -127,6 +122,7 @@ Box leftUpArm;
 Box leftLowArm;
 Box leftHand;
 Box leftThumb;
+
 //------------------------------------------
 //Right Arm
 //------------------------------------------
@@ -135,6 +131,7 @@ Box rightUpArm;
 Box rightLowArm;
 Box rightHand;
 Box rightThumb;
+
 //------------------------------------------
 //Left Leg
 //------------------------------------------
@@ -142,6 +139,7 @@ Box leftUpLeg;
 Box leftLowLeg;
 Box leftFoot;
 Box leftToe;
+
 //------------------------------------------
 //Left Leg
 //------------------------------------------
@@ -149,6 +147,7 @@ Box rightUpLeg;
 Box rightLowLeg;
 Box rightFoot;
 Box rightToe;
+
 //------------------------------------------
 //Head
 //------------------------------------------
@@ -192,7 +191,7 @@ void setup() {
   leftLowArm.fill(randomColor());
   leftHand = new Box(39.4, 10, 10);
   leftHand.fill(randomColor());
-  leftThumb = new Box(10, 10, 39.4);
+  leftThumb = new Box(10, 10, 25);
   leftThumb.fill(randomColor());
   
   //define right arm
@@ -202,7 +201,7 @@ void setup() {
   rightLowArm.fill(randomColor());
   rightHand = new Box(39.4, 10, 10);
   rightHand.fill(randomColor());
-  rightThumb = new Box(10, 10, 39.4);
+  rightThumb = new Box(10, 10, 25);
   rightThumb.fill(randomColor());
   
   //define left leg
@@ -232,48 +231,42 @@ void setup() {
   //define the head
   neck = new Box(10, 69.1, 10);
   neck.fill(randomColor());
-  head = new Ellipsoid(40, 40, 40);
+  head = new Ellipsoid(40, 30, 30);
   head.fill(randomColor());
-  leftEye =  new Ellipsoid(10, 10, 5);
+  leftEye =  new Ellipsoid(10, 15, 5);
   int eyes = randomColor(); //makes both eyes the same colour
   leftEye.fill(eyes);
-  rightEye =  new Ellipsoid(10, 10, 5);
+  rightEye =  new Ellipsoid(10, 15, 5);
   rightEye.fill(eyes);
   
   //define floor
-  floor = new Box(5000, 1, 1300);
+  floor = new Box(5000, 1, 1500);
   
- //=======================================================================
- //PARSE BVH FILE
- //=======================================================================
- test = loadStrings("JumpAndRoll.bvh"); //change file name to play different animations
+  
+//=======================================================================
+//PARSE BVH FILE
+//=======================================================================
+  test = loadStrings("XinJiang.bvh"); //change file name to play different animations
  
- 
- 
-   for (int i = 0; i < test.length; i++) {
-    if (test[i].equals("MOTION")){
-      start = i + 3;
-      String [] frames = split(test[i+1], ' ');
-      frameNum = int(frames[1]);
-      println("found");
-      //println(test[i+3]);
-      break;
-    }
-    println(i);
+  //finds the start of the motion data, dumps it into a list
+  //also finds the number of frames in the animation
+  for (int i = 0; i < test.length; i++) {
+   if (test[i].equals("MOTION")){
+     start = i + 3;
+     String [] frames = split(test[i+1], ' ');
+     frameNum = int(frames[1]);
+     break;
+   }
   }
-  
-  
   
   moveArray = new String[frameNum][78];
   
+  //splits the motion data by bone and stores it in the move array for later use
   for (int k = 0; k < (test.length)-start; k++){
     translate = split(test[start+k], ' ');
-    //println("-----------------------");
     int tranSize = 78;
     for (int j = 0; j < tranSize; j++){
       moveArray[k][j] = translate[j];
-      //println(tranSize-5);
-      //println(moveArray[k][j]);
     }
   }
 }
@@ -283,22 +276,25 @@ void setup() {
 void draw() {
   background(0);
   
-  getNextFrame();
+  getNextFrame();  //finds the next values for animation matrix
+  keyPressedIsCheckedContinuusly();  //pulls values for the camera movement
   
+  
+
+
+//=======================================================================
+//ANIMATION MATRICIES
+//=======================================================================
   pushMatrix();
-
-  translate(width + cameraWidth, height+cameraHeight, cameraDepth);
-
- //=======================================================================
- //ANIMATION MATRICIES
- //=======================================================================
+    translate(width + cameraWidth, height + cameraHeight, cameraDepth);
     //affects the entire skeleton as is is before any object is drawn
-    //translate(0, -100, 0);
-    rotateY(3.14159);
-    //translate(0, -100, 0);
+    rotateX(rotCamX);
+    rotateY(rotCamY + 3.14159);
     floor.draw(getGraphics());
   
-    //draw the skeleton
+    //------------------------------------------
+    //Spine --> Head
+    //------------------------------------------
     pushMatrix();
       translate(-moveX*10, -moveY*10, -moveZ*10);
       rotateX(radians(hipsX));
@@ -332,6 +328,10 @@ void draw() {
               rotateY(radians(headY));
               rotateZ(radians(headZ));
               head.draw(getGraphics());
+              translate(15, -5, -30);
+              leftEye.draw(getGraphics());
+              translate(-30, 0, 0);
+              rightEye.draw(getGraphics());
             popMatrix();
           popMatrix();
           
@@ -373,7 +373,7 @@ void draw() {
                   rotateX(radians(leftThumbX));
                   rotateY(radians(leftThumbY));
                   rotateZ(radians(leftThumbZ));
-                  translate(0, 0, -19.75);
+                  translate(0, 0, -12.5);
                   leftThumb.draw(getGraphics());
                 popMatrix();
               popMatrix();
@@ -418,7 +418,7 @@ void draw() {
                   rotateX(radians(rightThumbX));
                   rotateY(radians(rightThumbY));
                   rotateZ(radians(rightThumbZ));
-                  translate(0, 0, -19.75);
+                  translate(0, 0, -12.5);
                   rightThumb.draw(getGraphics());
                 popMatrix();
               popMatrix();
@@ -591,93 +591,37 @@ void getNextFrame() {
   
   rightThumbX = float(moveArray[frame][76]);
   rightThumbY = float(moveArray[frame][77]);
-  rightThumbZ = float(moveArray[frame][77]); //should be 78 but there is an error in my parsing function
+  rightThumbZ = float(moveArray[frame][77]);
   
-  if (frame < frameNum-1){
-    frame += 1;
-  }
-  //println(float(moveArray[frame][1]));
-
+  
+  if (frame < frameNum-1){  //iterate
+    frame += 1;  
+  } else frame = 0;  //and then loop
 }
   
 //=======================================================================
 //CONTROLS AND CONSTRAINTS
 //=======================================================================
 void keyPressedIsCheckedContinuusly() {
-
   if (keyPressed) {
-    if ((key == 'q')||(key == 'Q')){
-      if ((bone == 0)||(bone == 50)){
-        cameraDepth += 1;
-      } 
-      
-    } else if ((key == 'e')||(key == 'E')){
-      if ((bone == 0)||(bone == 50)){
-        cameraDepth -= 1;
-      
-      }
-
-        
-    //------------------------------------------------------------------
-    //Moves Joints Left
-    //------------------------------------------------------------------
-    } else if ((key == 'a')||(key == 'A')){
-      if ((bone == 0)||(bone == 50)){
-        cameraWidth += 1;
-      }
-      
-    //------------------------------------------------------------------
-    //Moves Joints Right
-    //------------------------------------------------------------------
-    } else if ((key == 'd')||(key == 'D')){
-      if ((bone == 0)||(bone == 50)){
-        cameraWidth -= 1;
-      }
-      
-    //------------------------------------------------------------------
-    //Moves Joints Up
-    //------------------------------------------------------------------
-    } else if ((key == 'w')||(key == 'W')){
-      if ((bone == 0)||(bone == 50)){
-        cameraHeight += 1;
-      }
-
-      
-    //------------------------------------------------------------------
-    //Moves Joints Down
-    //------------------------------------------------------------------
-    } else if ((key == 's')||(key == 'S')){
-      if ((bone == 0)||(bone == 50)){
-        cameraHeight -= 1;
-      }
-    } else if ((key == 'c')||(key == 'C')){
-      if (bone == 0){
-        bone = 50;
-      } else bone = 0;
-      
-    } else if ((key == 'z')||(key == 'Z')){
-      if (bone == 0){
+    if ((key == 'w')||(key == 'W')){
+        cameraDepth += 10;
+    }
+    if ((key == 's')||(key == 'S')){
+        cameraDepth -= 10;
+    }
+    if ((key == 'a')||(key == 'A')){
         rotCamY += 0.01;
-      } else if (bone == 50){
+    }
+    if ((key == 'd')||(key == 'D')){
         rotCamY -= 0.01;
-      }
-    } else if ((key == 'x')||(key == 'X')){
-      if (bone == 0){
-        rotCamX += 0.01;
-      } else if (bone == 50){
-        rotCamX -= 0.01;
-      }
     }
   }
-  
 }
 
-//==========================================================================
+//=======================================================================
+//SELECT RANDOM COLOUR
+//=======================================================================
 int randomColor(){
   return color(random(0,255), random(0,255), random(0,255));
-}
-
-//==========================================================================
-void mouseClicked(){
-  mouseClicked = true;
 }
