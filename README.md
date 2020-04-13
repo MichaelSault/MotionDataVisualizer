@@ -3,10 +3,10 @@ A number of test projects for the purpose of learning 3D modeling in Processing
 
 ----
 
-### April 16, 2020
+### April 23, 2020
 #### To Do:
-- [ ] Examine and learn how to parse data from a .bvh mo cap data file
-- [ ] Alter the existing skeleton to animate with an applicable .bvh file
+- [x] Examine and learn how to parse data from a .bvh mo cap data file
+- [x] Alter the existing skeleton to animate with an applicable .bvh file
 - [ ] Write a final report and powerpoint
 - [ ] Create a demo video
 
