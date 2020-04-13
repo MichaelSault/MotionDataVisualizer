@@ -93,9 +93,9 @@ int bone = 1;
 boolean mouseClicked = false;
 
 //camera vars
-float cameraWidth = 0.0;
-float cameraDepth = -100;
-float cameraHeight = 150;
+float cameraWidth = -1000.0;
+float cameraDepth = -700.0;
+float cameraHeight = 0.0;
 
 float rotCamX = 0.0;
 float rotCamY = 0.0;
@@ -103,8 +103,10 @@ float rotCamY = 0.0;
 //vars used to parse bvh
 String[] test;
 String[] translate;
-String[] [] moveArray = new String[2575][78];
+
 int start = 0;
+int frameNum;
+String[] [] moveArray = new String[frameNum][78];
 
 //------------------------------------------
 //Root Bone
@@ -157,6 +159,8 @@ Ellipsoid leftEye;
 Ellipsoid rightEye;
 
 Picked picked = null;
+
+Box floor;
 
 
 
@@ -227,7 +231,8 @@ void setup() {
   
   //define the head
   neck = new Box(10, 69.1, 10);
-  head = new Ellipsoid(45, 45, 45);
+  neck.fill(randomColor());
+  head = new Ellipsoid(40, 40, 40);
   head.fill(randomColor());
   leftEye =  new Ellipsoid(10, 10, 5);
   int eyes = randomColor(); //makes both eyes the same colour
@@ -235,20 +240,31 @@ void setup() {
   rightEye =  new Ellipsoid(10, 10, 5);
   rightEye.fill(eyes);
   
+  //define floor
+  floor = new Box(5000, 1, 1300);
+  
  //=======================================================================
  //PARSE BVH FILE
  //=======================================================================
- test = loadStrings("2FeetJump001.bvh");
+ test = loadStrings("JumpAndRoll.bvh"); //change file name to play different animations
+ 
+ 
  
    for (int i = 0; i < test.length; i++) {
     if (test[i].equals("MOTION")){
       start = i + 3;
+      String [] frames = split(test[i+1], ' ');
+      frameNum = int(frames[1]);
       println("found");
       //println(test[i+3]);
       break;
     }
     println(i);
   }
+  
+  
+  
+  moveArray = new String[frameNum][78];
   
   for (int k = 0; k < (test.length)-start; k++){
     translate = split(test[start+k], ' ');
@@ -271,20 +287,20 @@ void draw() {
   
   pushMatrix();
 
-    translate(width/2 + cameraWidth, height/2+cameraHeight, cameraDepth);
+  translate(width + cameraWidth, height+cameraHeight, cameraDepth);
 
  //=======================================================================
  //ANIMATION MATRICIES
  //=======================================================================
     //affects the entire skeleton as is is before any object is drawn
-    translate(0, -100, 0);
-    rotateX(rotCamX);
-    rotateY(rotCamY+3.14159);
-    translate(0, -100, 0);
+    //translate(0, -100, 0);
+    rotateY(3.14159);
+    //translate(0, -100, 0);
+    floor.draw(getGraphics());
   
     //draw the skeleton
     pushMatrix();
-      translate(moveX*10, moveY*10, moveZ*10);
+      translate(-moveX*10, -moveY*10, -moveZ*10);
       rotateX(radians(hipsX));
       rotateY(radians(hipsY));
       rotateZ(radians(hipsZ));
@@ -312,6 +328,9 @@ void draw() {
             neck.draw(getGraphics());
             pushMatrix();
               translate(0, -34.55, 0);
+              rotateX(radians(headX));
+              rotateY(radians(headY));
+              rotateZ(radians(headZ));
               head.draw(getGraphics());
             popMatrix();
           popMatrix();
@@ -350,11 +369,11 @@ void draw() {
                   leftHand.draw(getGraphics());
                 popMatrix();
                 pushMatrix();
-                  translate(-42.6, 0, 2.5);
+                  translate(-42.6, 0, -2.5);
                   rotateX(radians(leftThumbX));
                   rotateY(radians(leftThumbY));
                   rotateZ(radians(leftThumbZ));
-                  translate(0, 0, 19.75);
+                  translate(0, 0, -19.75);
                   leftThumb.draw(getGraphics());
                 popMatrix();
               popMatrix();
@@ -395,11 +414,11 @@ void draw() {
                   rightHand.draw(getGraphics());
                 popMatrix();
                 pushMatrix();
-                  translate(42.6, 0, 2.5);
+                  translate(42.6, 0, -2.5);
                   rotateX(radians(rightThumbX));
                   rotateY(radians(rightThumbY));
                   rotateZ(radians(rightThumbZ));
-                  translate(0, 0, 19.75);
+                  translate(0, 0, -19.75);
                   rightThumb.draw(getGraphics());
                 popMatrix();
               popMatrix();
@@ -420,6 +439,7 @@ void draw() {
         rotateZ(radians(leftUpLegZ));
         translate(0, 78.55, 0);
         leftUpLeg.draw(getGraphics());
+        println(leftUpLegX);
         pushMatrix();
           translate(0, 78.55, 0);
           rotateX(radians(leftLowLegX));
@@ -432,17 +452,9 @@ void draw() {
             rotateX(radians(leftFootX));
             rotateY(radians(leftFootY));
             rotateZ(radians(leftFootZ));
-            rotateX(1.309);
+            rotateX(-1.309);
             translate(0, 29.65, 0);
             leftFoot.draw(getGraphics());
-            pushMatrix();
-              translate(0, 29.65, 0);
-              rotateX(radians(leftToeX));
-              rotateY(radians(leftToeY));
-              rotateZ(radians(leftToeZ));
-              translate(0, 0, 14.75);
-              leftToe.draw(getGraphics());
-            popMatrix();
           popMatrix();
         popMatrix();
       popMatrix();
@@ -471,17 +483,9 @@ void draw() {
             rotateX(radians(rightFootX));
             rotateY(radians(rightFootY));
             rotateZ(radians(rightFootZ));
-            rotateX(1.309);
+            rotateX(-1.309);
             translate(0, 29.65, 0);
             rightFoot.draw(getGraphics());
-            pushMatrix();
-              translate(0, 29.65, 0);
-              rotateX(radians(rightToeX));
-              rotateY(radians(rightToeY));
-              rotateZ(radians(rightToeZ));
-              translate(0, 0, 14.75);
-              rightToe.draw(getGraphics());
-            popMatrix();
           popMatrix();
         popMatrix();
       popMatrix();
@@ -497,9 +501,9 @@ void getNextFrame() {
   moveY = float(moveArray[frame][2]);
   moveZ = float(moveArray[frame][3]);
   
-  hipsZ = float(moveArray[frame][4]);
-  hipsX = float(moveArray[frame][5]);
-  hipsY = float(moveArray[frame][6]);
+  hipsX = float(moveArray[frame][4]);
+  hipsY = float(moveArray[frame][5]);
+  hipsZ = float(moveArray[frame][6]);
   
   leftUpLegX = float(moveArray[frame][7]);
   leftUpLegY = float(moveArray[frame][8]);
@@ -589,7 +593,7 @@ void getNextFrame() {
   rightThumbY = float(moveArray[frame][77]);
   rightThumbZ = float(moveArray[frame][77]); //should be 78 but there is an error in my parsing function
   
-  if (frame < 2574){
+  if (frame < frameNum-1){
     frame += 1;
   }
   //println(float(moveArray[frame][1]));
