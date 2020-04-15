@@ -103,6 +103,14 @@ int start = 0;
 int frameNum;
 String[] [] moveArray = new String[frameNum][78];
 
+//selecting the mo cap file
+String fileName;
+String ffName;
+boolean setUpDone = false;
+boolean firstRun = false;
+
+boolean showData = false;
+boolean showInstructions = true;
 //------------------------------------------
 //Root Bone
 //------------------------------------------
@@ -242,33 +250,8 @@ void setup() {
   //define floor
   floor = new Box(5000, 1, 1500);
   
-  
-//=======================================================================
-//PARSE BVH FILE
-//=======================================================================
-  test = loadStrings("XinJiang.bvh"); //change file name to play different animations
- 
-  //finds the start of the motion data, dumps it into a list
-  //also finds the number of frames in the animation
-  for (int i = 0; i < test.length; i++) {
-   if (test[i].equals("MOTION")){
-     start = i + 3;
-     String [] frames = split(test[i+1], ' ');
-     frameNum = int(frames[1]);
-     break;
-   }
-  }
-  
-  moveArray = new String[frameNum][78];
-  
-  //splits the motion data by bone and stores it in the move array for later use
-  for (int k = 0; k < (test.length)-start; k++){
-    translate = split(test[start+k], ' ');
-    int tranSize = 78;
-    for (int j = 0; j < tranSize; j++){
-      moveArray[k][j] = translate[j];
-    }
-  }
+  selectInput("Select a file to process:", "fileSelected"); //promts user to select a motion file
+
 }
 
 
@@ -276,221 +259,256 @@ void setup() {
 void draw() {
   background(0);
   
-  getNextFrame();  //finds the next values for animation matrix
-  keyPressedIsCheckedContinuusly();  //pulls values for the camera movement
+  if (setUpDone == true){  //checks if a .bvh file is selected
+    
+    if (firstRun == true){  //on first iteration, sets moveArray;
+      //=======================================================================
+      //PARSE BVH FILE
+      //=======================================================================
+        test = loadStrings(fileName); //change file name to play different animations
+       
+       String[] fName = split(fileName, '\\');
+       ffName = fName[fName.length-1];
+       println(ffName);
+        //finds the start of the motion data, dumps it into a list
+        //also finds the number of frames in the animation
+        for (int i = 0; i < test.length; i++) {
+         if (test[i].equals("MOTION")){
+           start = i + 3;
+           String [] frames = split(test[i+1], ' ');
+           frameNum = int(frames[1]);
+           break;
+         }
+        }
+  
+        moveArray = new String[frameNum][78];
+        
+        //splits the motion data by bone and stores it in the move array for later use
+        for (int k = 0; k < (test.length)-start; k++){
+          translate = split(test[start+k], ' ');
+          int tranSize = 78;
+          for (int j = 0; j < tranSize; j++){
+            moveArray[k][j] = translate[j];
+          }
+        }
+        firstRun = false;
+    }
+    
+    getNextFrame();  //finds the next values for animation matrix
+    keyPressedIsCheckedContinuusly();  //pulls values for the camera movement
+    
+    
   
   
-
-
-//=======================================================================
-//ANIMATION MATRICIES
-//=======================================================================
-  pushMatrix();
-    translate(width + cameraWidth, height + cameraHeight, cameraDepth);
-    //affects the entire skeleton as is is before any object is drawn
-    rotateX(rotCamX);
-    rotateY(rotCamY + 3.14159);
-    floor.draw(getGraphics());
-  
-    //------------------------------------------
-    //Spine --> Head
-    //------------------------------------------
+  //=======================================================================
+  //ANIMATION MATRICIES
+  //=======================================================================
     pushMatrix();
-      translate(-moveX*10, -moveY*10, -moveZ*10);
-      rotateX(radians(hipsX));
-      rotateY(radians(hipsY));
-      rotateZ(radians(hipsZ));
-      hips.draw(getGraphics());
+      translate(width + cameraWidth, height + cameraHeight, cameraDepth);
+      //affects the entire skeleton as is is before any object is drawn
+      rotateX(rotCamX);
+      rotateY(rotCamY + 3.14159);
+      floor.draw(getGraphics());
+    
+      //------------------------------------------
+      //Spine --> Head
+      //------------------------------------------
       pushMatrix();
-        translate(0, -7.5, 0);
-        rotateX(radians(spineX));
-        rotateY(radians(spineY));
-        rotateZ(radians(spineZ));
-        translate(0, -51.25, 0);
-        spine.draw(getGraphics());
+        translate(-moveX*10, -moveY*10, -moveZ*10);
+        rotateX(radians(hipsX));
+        rotateY(radians(hipsY));
+        rotateZ(radians(hipsZ));
+        hips.draw(getGraphics());
         pushMatrix();
+          translate(0, -7.5, 0);
+          rotateX(radians(spineX));
+          rotateY(radians(spineY));
+          rotateZ(radians(spineZ));
           translate(0, -51.25, 0);
-          rotateX(radians(spine1X));
-          rotateY(radians(spine1Y));
-          rotateZ(radians(spine1Z));
-          translate(0, -39.15, 0);
-          spine1.draw(getGraphics());
+          spine.draw(getGraphics());
           pushMatrix();
+            translate(0, -51.25, 0);
+            rotateX(radians(spine1X));
+            rotateY(radians(spine1Y));
+            rotateZ(radians(spine1Z));
             translate(0, -39.15, 0);
-            rotateX(radians(neckX));
-            rotateY(radians(neckY));
-            rotateZ(radians(neckZ));
-            translate(0, -34.55, 0);
-            neck.draw(getGraphics());
+            spine1.draw(getGraphics());
             pushMatrix();
+              translate(0, -39.15, 0);
+              rotateX(radians(neckX));
+              rotateY(radians(neckY));
+              rotateZ(radians(neckZ));
               translate(0, -34.55, 0);
-              rotateX(radians(headX));
-              rotateY(radians(headY));
-              rotateZ(radians(headZ));
-              head.draw(getGraphics());
-              translate(15, -5, -30);
-              leftEye.draw(getGraphics());
-              translate(-30, 0, 0);
-              rightEye.draw(getGraphics());
+              neck.draw(getGraphics());
+              pushMatrix();
+                translate(0, -34.55, 0);
+                rotateX(radians(headX));
+                rotateY(radians(headY));
+                rotateZ(radians(headZ));
+                head.draw(getGraphics());
+                translate(15, -5, -30);
+                leftEye.draw(getGraphics());
+                translate(-30, 0, 0);
+                rightEye.draw(getGraphics());
+              popMatrix();
             popMatrix();
-          popMatrix();
-          
-          
-    //------------------------------------------
-    //Left Arm
-    //------------------------------------------
-          pushMatrix();
-            translate(-5, -39.15, 0);
-            rotateX(radians(leftShoulderX));
-            rotateY(radians(leftShoulderY));
-            rotateZ(radians(leftShoulderZ));
-            translate(-33.55, 0, 0);
-            leftShoulder.draw(getGraphics());
+            
+            
+      //------------------------------------------
+      //Left Arm
+      //------------------------------------------
             pushMatrix();
+              translate(-5, -39.15, 0);
+              rotateX(radians(leftShoulderX));
+              rotateY(radians(leftShoulderY));
+              rotateZ(radians(leftShoulderZ));
               translate(-33.55, 0, 0);
-              rotateX(radians(leftUpArmX));
-              rotateY(radians(leftUpArmY));
-              rotateZ(radians(leftUpArmZ));
-              translate(-54.7, 0, 0);
-              leftUpArm.draw(getGraphics());
+              leftShoulder.draw(getGraphics());
               pushMatrix();
+                translate(-33.55, 0, 0);
+                rotateX(radians(leftUpArmX));
+                rotateY(radians(leftUpArmY));
+                rotateZ(radians(leftUpArmZ));
                 translate(-54.7, 0, 0);
-                rotateX(radians(leftLowArmX));
-                rotateY(radians(leftLowArmY));
-                rotateZ(radians(leftLowArmZ));
-                translate(-42.6, 0, 0);
-                leftLowArm.draw(getGraphics());
+                leftUpArm.draw(getGraphics());
                 pushMatrix();
+                  translate(-54.7, 0, 0);
+                  rotateX(radians(leftLowArmX));
+                  rotateY(radians(leftLowArmY));
+                  rotateZ(radians(leftLowArmZ));
                   translate(-42.6, 0, 0);
-                  rotateX(radians(leftHandX));
-                  rotateY(radians(leftHandY));
-                  rotateZ(radians(leftHandZ));
-                  translate(-19.75, 0, 0);
-                  leftHand.draw(getGraphics());
-                popMatrix();
-                pushMatrix();
-                  translate(-42.6, 0, -2.5);
-                  rotateX(radians(leftThumbX));
-                  rotateY(radians(leftThumbY));
-                  rotateZ(radians(leftThumbZ));
-                  translate(0, 0, -12.5);
-                  leftThumb.draw(getGraphics());
+                  leftLowArm.draw(getGraphics());
+                  pushMatrix();
+                    translate(-42.6, 0, 0);
+                    rotateX(radians(leftHandX));
+                    rotateY(radians(leftHandY));
+                    rotateZ(radians(leftHandZ));
+                    translate(-19.75, 0, 0);
+                    leftHand.draw(getGraphics());
+                  popMatrix();
+                  pushMatrix();
+                    translate(-42.6, 0, -2.5);
+                    rotateX(radians(leftThumbX));
+                    rotateY(radians(leftThumbY));
+                    rotateZ(radians(leftThumbZ));
+                    translate(0, 0, -12.5);
+                    leftThumb.draw(getGraphics());
+                  popMatrix();
                 popMatrix();
               popMatrix();
             popMatrix();
-          popMatrix();
-          
-          
-    //------------------------------------------
-    //Right Arm
-    //------------------------------------------
-          pushMatrix();
-            translate(5, -39.15, 0);
-            rotateX(radians(rightShoulderX));
-            rotateY(radians(rightShoulderY));
-            rotateZ(radians(rightShoulderZ));
-            translate(33.55, 0, 0);
-            rightShoulder.draw(getGraphics());
+            
+            
+      //------------------------------------------
+      //Right Arm
+      //------------------------------------------
             pushMatrix();
+              translate(5, -39.15, 0);
+              rotateX(radians(rightShoulderX));
+              rotateY(radians(rightShoulderY));
+              rotateZ(radians(rightShoulderZ));
               translate(33.55, 0, 0);
-              rotateX(radians(rightUpArmX));
-              rotateY(radians(rightUpArmY));
-              rotateZ(radians(rightUpArmZ));
-              translate(54.7, 0, 0);
-              rightUpArm.draw(getGraphics());
+              rightShoulder.draw(getGraphics());
               pushMatrix();
+                translate(33.55, 0, 0);
+                rotateX(radians(rightUpArmX));
+                rotateY(radians(rightUpArmY));
+                rotateZ(radians(rightUpArmZ));
                 translate(54.7, 0, 0);
-                rotateX(radians(rightLowArmX));
-                rotateY(radians(rightLowArmY));
-                rotateZ(radians(rightLowArmZ));
-                translate(42.6, 0, 0);
-                rightLowArm.draw(getGraphics());
+                rightUpArm.draw(getGraphics());
                 pushMatrix();
+                  translate(54.7, 0, 0);
+                  rotateX(radians(rightLowArmX));
+                  rotateY(radians(rightLowArmY));
+                  rotateZ(radians(rightLowArmZ));
                   translate(42.6, 0, 0);
-                  rotateX(radians(rightHandX));
-                  rotateY(radians(rightHandY));
-                  rotateZ(radians(rightHandZ));
-                  translate(19.75, 0, 0);
-                  rightHand.draw(getGraphics());
-                popMatrix();
-                pushMatrix();
-                  translate(42.6, 0, -2.5);
-                  rotateX(radians(rightThumbX));
-                  rotateY(radians(rightThumbY));
-                  rotateZ(radians(rightThumbZ));
-                  translate(0, 0, -12.5);
-                  rightThumb.draw(getGraphics());
+                  rightLowArm.draw(getGraphics());
+                  pushMatrix();
+                    translate(42.6, 0, 0);
+                    rotateX(radians(rightHandX));
+                    rotateY(radians(rightHandY));
+                    rotateZ(radians(rightHandZ));
+                    translate(19.75, 0, 0);
+                    rightHand.draw(getGraphics());
+                  popMatrix();
+                  pushMatrix();
+                    translate(42.6, 0, -2.5);
+                    rotateX(radians(rightThumbX));
+                    rotateY(radians(rightThumbY));
+                    rotateZ(radians(rightThumbZ));
+                    translate(0, 0, -12.5);
+                    rightThumb.draw(getGraphics());
+                  popMatrix();
                 popMatrix();
               popMatrix();
+            popMatrix();  
+          popMatrix();
+        popMatrix();
+      
+      
+      //------------------------------------------
+      //Left Leg
+      //------------------------------------------ 
+        pushMatrix();
+          translate(-36.5, 0, 0);
+          translate(0, 7.5, 0);
+          rotateX(radians(leftUpLegX));
+          rotateY(radians(leftUpLegY));
+          rotateZ(radians(leftUpLegZ));
+          translate(0, 78.55, 0);
+          leftUpLeg.draw(getGraphics());
+          pushMatrix();
+            translate(0, 78.55, 0);
+            rotateX(radians(leftLowLegX));
+            rotateY(radians(leftLowLegY));
+            rotateZ(radians(leftLowLegZ));
+            translate(0, 77.1, 0);
+            leftLowLeg.draw(getGraphics());
+            pushMatrix();
+              translate(0, 77.1, 0);
+              rotateX(radians(leftFootX));
+              rotateY(radians(leftFootY));
+              rotateZ(radians(leftFootZ));
+              rotateX(-1.309);
+              translate(0, 29.65, 0);
+              leftFoot.draw(getGraphics());
             popMatrix();
-          popMatrix();  
+          popMatrix();
         popMatrix();
-      popMatrix();
-    
-    
-    //------------------------------------------
-    //Left Leg
-    //------------------------------------------ 
-      pushMatrix();
-        translate(-36.5, 0, 0);
-        translate(0, 7.5, 0);
-        rotateX(radians(leftUpLegX));
-        rotateY(radians(leftUpLegY));
-        rotateZ(radians(leftUpLegZ));
-        translate(0, 78.55, 0);
-        leftUpLeg.draw(getGraphics());
-        println(leftUpLegX);
+              
+              
+      //------------------------------------------
+      //Right Leg
+      //------------------------------------------   
         pushMatrix();
+          translate(36.5, 0, 0);
+          translate(0, 7.5, 0);
+          rotateX(radians(rightUpLegX));
+          rotateY(radians(rightUpLegY));
+          rotateZ(radians(rightUpLegZ));
           translate(0, 78.55, 0);
-          rotateX(radians(leftLowLegX));
-          rotateY(radians(leftLowLegY));
-          rotateZ(radians(leftLowLegZ));
-          translate(0, 77.1, 0);
-          leftLowLeg.draw(getGraphics());
+          rightUpLeg.draw(getGraphics());
           pushMatrix();
+            translate(0, 78.55, 0);
+            rotateX(radians(rightLowLegX));
+            rotateY(radians(rightLowLegY));
+            rotateZ(radians(rightLowLegZ));
             translate(0, 77.1, 0);
-            rotateX(radians(leftFootX));
-            rotateY(radians(leftFootY));
-            rotateZ(radians(leftFootZ));
-            rotateX(-1.309);
-            translate(0, 29.65, 0);
-            leftFoot.draw(getGraphics());
+            rightLowLeg.draw(getGraphics());
+            pushMatrix();
+              translate(0, 77.1, 0);
+              rotateX(radians(rightFootX));
+              rotateY(radians(rightFootY));
+              rotateZ(radians(rightFootZ));
+              rotateX(-1.309);
+              translate(0, 29.65, 0);
+              rightFoot.draw(getGraphics());
+            popMatrix();
           popMatrix();
         popMatrix();
       popMatrix();
-            
-            
-    //------------------------------------------
-    //Right Leg
-    //------------------------------------------   
-      pushMatrix();
-        translate(36.5, 0, 0);
-        translate(0, 7.5, 0);
-        rotateX(radians(rightUpLegX));
-        rotateY(radians(rightUpLegY));
-        rotateZ(radians(rightUpLegZ));
-        translate(0, 78.55, 0);
-        rightUpLeg.draw(getGraphics());
-        pushMatrix();
-          translate(0, 78.55, 0);
-          rotateX(radians(rightLowLegX));
-          rotateY(radians(rightLowLegY));
-          rotateZ(radians(rightLowLegZ));
-          translate(0, 77.1, 0);
-          rightLowLeg.draw(getGraphics());
-          pushMatrix();
-            translate(0, 77.1, 0);
-            rotateX(radians(rightFootX));
-            rotateY(radians(rightFootY));
-            rotateZ(radians(rightFootZ));
-            rotateX(-1.309);
-            translate(0, 29.65, 0);
-            rightFoot.draw(getGraphics());
-          popMatrix();
-        popMatrix();
-      popMatrix();
-    popMatrix();
-  popMatrix(); //closes the one way up top
+    popMatrix(); //closes the one way up top
+  }
 } 
 
 //=======================================================================
@@ -597,6 +615,44 @@ void getNextFrame() {
   if (frame < frameNum-1){  //iterate
     frame += 1;  
   } else frame = 0;  //and then loop
+  
+  if (showData == true){
+    textSize(32);
+    fill(255,255,255);
+    text("File:", 10, 30);
+    fill(255,0,0);
+    text(ffName, 85, 30);
+    fill(255,255,255);
+    text("Frame: " + frame + "/" + frameNum, 10, 62);
+    text("Hips(Translation): (" + nf(moveX, 0, 2) + ", " + nf(moveY, 0, 2) + ", " + nf(moveZ, 0, 2) + ")", 10, 30+(32*2));
+    text("Hips(Rotation): (" + nf(hipsX, 0, 2) + ", " + nf(hipsY, 0, 2) + ", " + nf(hipsZ, 0, 2) + ")", 10, 30+(32*3));
+    text("Left Upper Leg: (" + nf(leftUpLegX, 0, 2) + ", " + nf(leftUpLegY, 0, 2) + ", " + nf(leftUpLegZ, 0, 2) + ")", 10, 30+(32*4));
+    text("Left Lower Leg: (" + nf(leftLowLegX, 0, 2) + ", " + nf(leftLowLegY, 0, 2) + ", " + nf(leftLowLegZ, 0, 2) + ")", 10, 30+(32*5));
+    text("Left Foot: (" + nf(leftFootX, 0, 2) + ", " + nf(leftFootY, 0, 2) + ", " + nf(leftFootZ, 0, 2) + ")", 10, 30+(32*6));
+    text("Right Upper Leg: (" + nf(rightUpLegX, 0, 2) + ", " + nf(rightUpLegY, 0, 2) + ", " + nf(rightUpLegZ, 0, 2) + ")", 10, 30+(32*7));
+    text("Right Lower Leg: (" + nf(rightLowLegX, 0, 2) + ", " + nf(rightLowLegY, 0, 2) + ", " + nf(rightLowLegZ, 0, 2) + ")", 10, 30+(32*8));
+    text("Right Foot: (" + nf(rightFootX, 0, 2) + ", " + nf(rightFootY, 0, 2) + ", " + nf(rightFootZ, 0, 2) + ")", 10, 30+(32*9));
+    text("Lower Spine: (" + nf(spineX, 0, 2) + ", " + nf(spineY, 0, 2) + ", " + nf(spineZ, 0, 2) + ")", 10, 30+(32*10));
+    text("Upper Spine: (" + nf(spine1X, 0, 2) + ", " + nf(spine1Y, 0, 2) + ", " + nf(spine1Z, 0, 2) + ")", 10, 30+(32*11));
+    text("Neck: (" + nf(neckX, 0, 2) + ", " + nf(neckY, 0, 2) + ", " + nf(neckZ, 0, 2) + ")", 10, 30+(32*12));
+    text("Head: (" + nf(headX, 0, 2) + ", " + nf(headY, 0, 2) + ", " + nf(headZ, 0, 2) + ")", 10, 30+(32*13));
+    text("Left Shoulder: (" + nf(leftShoulderX, 0, 2) + ", " + nf(leftShoulderY, 0, 2) + ", " + nf(leftShoulderZ, 0, 2) + ")", 10, 30+(32*14));
+    text("Left Upper Arm: (" + nf(leftUpArmX, 0, 2) + ", " + nf(leftUpArmY, 0, 2) + ", " + nf(leftUpArmZ, 0, 2) + ")", 10, 30+(32*15));
+    text("Left Lower Arm: (" + nf(leftLowArmX, 0, 2) + ", " + nf(leftLowArmY, 0, 2) + ", " + nf(leftLowArmZ, 0, 2) + ")", 10, 30+(32*16));
+    text("Left Hand: (" + nf(leftHandX, 0, 2) + ", " + nf(leftHandY, 0, 2) + ", " + nf(leftHandZ, 0, 2) + ")", 10, 30+(32*17));
+    text("Right Shoulder: (" + nf(rightShoulderX, 0, 2) + ", " + nf(rightShoulderY, 0, 2) + ", " + nf(rightShoulderZ, 0, 2) + ")", 10, 30+(32*18));
+    text("Right Upper Arm: (" + nf(rightUpArmX, 0, 2) + ", " + nf(rightUpArmY, 0, 2) + ", " + nf(rightUpArmZ, 0, 2) + ")", 10, 30+(32*19));
+    text("Right Lower Arm: (" + nf(rightLowArmX, 0, 2) + ", " + nf(rightLowArmY, 0, 2) + ", " + nf(rightLowArmZ, 0, 2) + ")", 10, 30+(32*20));
+    text("Right Hand: (" + nf(rightHandX, 0, 2) + ", " + nf(rightHandY, 0, 2) + ", " + nf(rightHandZ, 0, 2) + ")", 10, 30+(32*21));
+  }
+  
+  if (showInstructions == true){
+    textSize(32);
+    fill(255,255,255);
+    text("Press 1 to hide instructions", 10, 30);
+    text("Press 2 to show data", 10, 62);
+    text("Press 3 to load a new file", 10, 94);
+  }
 }
   
 //=======================================================================
@@ -619,9 +675,51 @@ void keyPressedIsCheckedContinuusly() {
   }
 }
 
+void keyReleased() {
+  if (key == '2'){  //toggle the data (frame number, file name, etc)
+      if (showData == false){
+        showData = true;
+        showInstructions = false;
+      } else if (showData == true){
+        showData = false;
+        showInstructions = false;
+      }
+    }
+    if (key == '3'){  //press to load a new file
+      selectInput("Select a file to process:", "fileSelected"); //promts user to select a motion file
+      firstRun = false;
+      setUpDone = false;
+    }
+    if (key == '1'){  //toggle instructions
+      if (showInstructions == false){
+        showInstructions = true;
+        showData = false;
+      } else if (showInstructions == true){
+        showInstructions = false;
+        showData = false;
+      }
+    }
+}
+
 //=======================================================================
 //SELECT RANDOM COLOUR
 //=======================================================================
 int randomColor(){
   return color(random(0,255), random(0,255), random(0,255));
+}
+
+
+//=======================================================================
+//DEFINE THE INPUT FILE PATH
+//=======================================================================
+void fileSelected(File selection) {
+  if (selection == null) {
+    //println("Window was closed or the user hit cancel.");
+  } else {
+    //println("User selected " + selection.getPath());
+    fileName = selection.getPath();
+    setUpDone = true;
+    firstRun = true;
+    frame = 0;
+  }
 }
