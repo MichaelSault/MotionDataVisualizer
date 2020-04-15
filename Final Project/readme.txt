@@ -9,6 +9,7 @@
 // Name: Michael Sault
 // Student ID: 8459820
 // Course: CSI 4103
+// Email: michael_sault@hotmail.com
 //=========================================================================
 
 In order to run this application, simply unzip the archive that corrisponds to your 
