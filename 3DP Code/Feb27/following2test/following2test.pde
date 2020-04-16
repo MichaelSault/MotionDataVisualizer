@@ -1,3 +1,18 @@
+//===============================================================================
+// This Program was developed as part of an independednt reseach class
+// focusing on Hierarchical Modeling of the human skeleton.
+//
+// Feel free to use the application to visualize your own motion capture data,
+// or add to the source code.
+// I only ask that you give me credit if you decide to do so.
+//
+// Name: Michael Sault
+// Student ID: 8459820
+// Course: CSI 4103
+// School: University of Ottawa
+//===============================================================================
+
+//this project was partially based on code/discussion that can be found here:
 // https : // forum.processing.org/two/discussion/24912/radar-view-of-infinite-3d-space#latest
 // https : // www.openprocessing.org/sketch/25255
  
@@ -36,9 +51,6 @@ void draw() {
  
   // draw Main Scene in 3D
   drawMainSceneIn3D(); 
- 
-  // read key throughout 
-  //keyPressedIsCheckedContinuusly();
  
   // HUD https : // en.wikipedia.org/wiki/Head-up_display ------------- 
   camera();
@@ -83,29 +95,7 @@ void drawMainSceneIn3D() {
   popMatrix();
 }//func
  
-// --------------------------------------------------------------------------
-// Inputs 
- 
-//void keyPressedIsCheckedContinuusly() {
- 
-//  float Radius = 13;
- 
-//  if (keyPressed) {
-//    if (key == '1'){
-//      xin = mouseX;
-//      yin = mouseY;
-//      movement = 0;
-    //}else if (key == '2'){
-    //  xin = mouseX;
-    //  yin = mouseY;
-    //  movement = 1;
-    //}else if (key == '3'){
-    //  zin = mouseY;
-    //  xin = mouseX;
-    //  movement = 2;
-    //}
-//    }// if(keyPressed)
-//}
+
  
 // --------------------------------------------------------------------------------
  
@@ -149,25 +139,11 @@ void dragSegment(int i, float xin, float yin, float zin) {
   float dy = yin - y[i];
   float dz = zin - z[i];
   
-  //if (movement == 0){
-      float angle1 = atan2(dy, dx);
-      float angle2 = atan2(dz, dy);
-      x[i] = xin - cos(angle1) * segLength;
-      y[i] = yin - (sin(angle1) * segLength);
-      z[i] = zin - sin(angle2) * segLength;
-  //} else if (movement == 1){
-  //   float angle1 = atan2(dy, dx);
-  //   float angle2 = atan2(dz, dy);
-  //    x[i] = xin - cos(angle1) * segLength;
-  //    y[i] = yin - sin(angle2) * segLength;
-  //    z[i] = zin - sin(angle2) * segLength;
-  //}
-  //} else if (movement == 2){
-  //    float angle2 = atan2(dz, dx);
-  //    x[i] = xin - cos(angle2) * segLength;
-  //    //y[i] = yin - sin(angle2) * segLength;
-  //    z[i] = zin - sin(angle2) * segLength;
-  //}
+  float angle1 = atan2(dy, dx);
+  float angle2 = atan2(dz, dy);
+  x[i] = xin - cos(angle1) * segLength;
+  y[i] = yin - (sin(angle1) * segLength);
+  z[i] = zin - sin(angle2) * segLength;
  
   segment(x[i], y[i], z[i], angle);
   

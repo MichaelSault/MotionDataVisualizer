@@ -1,3 +1,17 @@
+//===============================================================================
+// This Program was developed as part of an independednt reseach class
+// focusing on Hierarchical Modeling of the human skeleton.
+//
+// Feel free to use the application to visualize your own motion capture data,
+// or add to the source code.
+// I only ask that you give me credit if you decide to do so.
+//
+// Name: Michael Sault
+// Student ID: 8459820
+// Course: CSI 4103
+// School: University of Ottawa
+//===============================================================================
+
 import peasy.*;
 
 PeasyCam cam;
@@ -54,11 +68,6 @@ void draw()
   ax[num-1] += random(-range, range);
   ay[num-1] += random(-range, range);
   az[num-1] += random(-range, range);
-
-  //// Constrain all points to the screen
-  //ax[num-1] = constrain(ax[num-1], 0, width);
-  //ay[num-1] = constrain(ay[num-1], 0, height);
-  //az[num-1] = constrain(az[num-1], 0, width);
   
   // Draw a line connecting the points
   for(int i=1; i<num; i++) {    
