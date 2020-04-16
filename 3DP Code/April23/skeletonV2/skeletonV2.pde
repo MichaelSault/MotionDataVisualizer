@@ -1,4 +1,4 @@
-//=========================================================================
+//===============================================================================
 // This Program was developed as part of an independednt reseach class
 // focusing on Hierarchical Modeling of the human skeleton.
 //
@@ -9,7 +9,8 @@
 // Name: Michael Sault
 // Student ID: 8459820
 // Course: CSI 4103
-//=========================================================================
+// School: University of Ottawa
+//===============================================================================
 
 
 import shapes3d.utils.*;
