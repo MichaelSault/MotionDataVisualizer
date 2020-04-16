@@ -1,7 +1,7 @@
-//=========================================================================
+//===============================================================================
 // This Program was developed as part of an independednt reseach class
 // focusing on Hierarchical Modeling of the human skeleton.
-
+//
 // Feel free to use the application to visualize your own motion capture data,
 // or add to the source code.
 // I only ask that you give me credit if you decide to do so.
@@ -9,7 +9,8 @@
 // Name: Michael Sault
 // Student ID: 8459820
 // Course: CSI 4103
-//=========================================================================
+// School: University of Ottawa
+//===============================================================================
 
 
 import shapes3d.utils.*;
