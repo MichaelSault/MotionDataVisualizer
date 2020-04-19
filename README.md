@@ -1,5 +1,6 @@
 # Processing3DTests
-A number of test projects for the purpose of learning 3D modeling in Processing
+This repository contains a number of tests and examples I put together while learning 3D Processing for my CSI4103 class at uOttawa.
+The end goal was ultimantly to create a human skeleton that would idealy work with motion capture data.
 
 ----
 
@@ -7,8 +8,9 @@ A number of test projects for the purpose of learning 3D modeling in Processing
 #### To Do:
 - [x] Examine and learn how to parse data from a .bvh mo cap data file
 - [x] Alter the existing skeleton to animate with an applicable .bvh file
-- [ ] Write a final report and powerpoint
-- [ ] Create a demo video
+- [ ] Provide the application as a .exe file for ease of use
+- [ ] Write a final report and powerpoint (in progress)
+- [ ] Create a demo video (tbd)
 
 #### Completed:
 - [x] Working with the Kinetic Library
