@@ -9,8 +9,8 @@ The end goal was ultimantly to create a human skeleton that would idealy work wi
 - [x] Examine and learn how to parse data from a .bvh mo cap data file
 - [x] Alter the existing skeleton to animate with an applicable .bvh file
 - [x] Provide the application as a .exe file for ease of use
-- [x] Write a final report and powerpoint (in progress)
-- [ ] Create a demo video (tbd)
+- [x] Write a final report and powerpoint
+- [x] Create a demo video
 
 #### Completed:
 - [x] Working with the Kinetic Library
