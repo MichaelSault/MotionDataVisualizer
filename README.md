@@ -2,7 +2,7 @@
 This repository contains a number of tests and examples I put together while learning 3D Processing for my CSI4103 class at uOttawa.
 The end goal was ultimantly to create a human skeleton that would idealy work with motion capture data.
 
-Demo Video Avalible Here: https://youtu.be/urdTDtS_HoE
+Skeleton Demo Video Avalible Here: https://youtu.be/urdTDtS_HoE
 
 ----
 
